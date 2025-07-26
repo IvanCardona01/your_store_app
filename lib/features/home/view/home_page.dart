@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:your_store_app/features/home/presenter/home_presenter.dart';
 import 'package:your_store_app/features/home/presenter/states/home_state.dart';
 import 'package:your_store_app/features/home/presenter/events/home_event.dart';
+import 'package:your_store_app/shared/widgets/bottom_sheets/add_to_cart_bottom_sheet.dart';
 import 'package:your_store_app/shared/widgets/shimmer_grid.dart';
 
 class HomePage extends StatefulWidget {
@@ -97,45 +98,68 @@ class _HomePageState extends State<HomePage> {
     return Card(
       elevation: 4,
       clipBehavior: Clip.hardEdge,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Stack(
         children: [
-          Expanded(
-            child: Image.network(
-              product.thumbnail,
-              fit: BoxFit.cover,
-              width: double.infinity,
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress == null) return child;
-                return Container(
-                  color: Colors.grey[300],
-                  child: const Center(
-                    child: CircularProgressIndicator(strokeWidth: 2),
-                  ),
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              product.title,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 14,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Image.network(
+                  product.thumbnail,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Container(
+                      color: Colors.grey[300],
+                      child: const Center(
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      ),
+                    );
+                  },
+                ),
               ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  product.title,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text(
+                  "\$${product.price}",
+                  style: const TextStyle(color: Colors.green),
+                ),
+              ),
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-              "\$${product.price}",
-              style: const TextStyle(color: Colors.green),
+          Positioned(
+            top: 8,
+            right: 8,
+            child: CircleAvatar(
+              backgroundColor: Colors.black54,
+              child: IconButton(
+                icon: const Icon(Icons.shopping_cart, color: Colors.white),
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(20),
+                      ),
+                    ),
+                    builder: (_) => AddToCartBottomSheet(product: product),
+                  );
+                },
+              ),
             ),
           ),
         ],

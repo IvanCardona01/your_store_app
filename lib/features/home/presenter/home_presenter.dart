@@ -61,22 +61,19 @@ class HomePresenter extends Bloc<HomeEvent, HomeState> {
 
     _skip += _limit;
 
-    final result = await _getProducts(
-      skip: _skip,
-      limit: _limit,
+    final result = await _getProducts(skip: _skip, limit: _limit);
+    _total = result.total;
+    _products.addAll(result.products);
+
+    final hasMore = _products.length < _total;
+
+    emit(
+      HomeLoaded(
+        products: List.unmodifiable(_products),
+        hasMore: hasMore,
+        isLoadingMore: false,
+      ),
     );
- _total = result.total;
-        _products.addAll(result.products);
-
-        final hasMore = _products.length < _total;
-
-        emit(
-          HomeLoaded(
-            products: List.unmodifiable(_products),
-            hasMore: hasMore,
-            isLoadingMore: false,
-          ),
-        );
 
     _isFetching = false;
   }
