@@ -34,3 +34,11 @@ We use **GoRouter** for declarative navigation handling:
 
 - Declarative and typed routes
 - Hierarchical navigation and nested routes
+
+
+
+Puntos de mejora
+
+Guard de autenticación
+Manejo de type alias para acortar rutas
+Encriptar contraseña antes de guardar en la DB

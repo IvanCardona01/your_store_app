@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:your_store_app/features/auth/injection.dart';
+import 'package:your_store_app/features/auth/presenter/login_presenter.dart';
 import '../../../features/auth/view/login_page.dart';
 import '../../../features/auth/view/register_page.dart';
 import '../../../features/home/view/home_page.dart';
@@ -15,16 +17,21 @@ import '../../../shared/widgets/main_layout.dart';
 import 'app_routes.dart';
 
 class AppPages {
-  static const String initial = AppRoutes.home;
+  static const String initial = AppRoutes.login;
 
   static final GoRouter router = GoRouter(
     initialLocation: initial,
     routes: [
-      // GoRoute(
-      //   path: AppRoutes.login,
-      //   name: 'login',
-      //   builder: (context, state) => const LoginPage(),
-      // ),
+      GoRoute(
+      path: AppRoutes.login,
+      builder: (context, state) {
+        initAuth();
+        return BlocProvider(
+          create: (_) => sl<LoginPresenter>(),
+          child: const LoginPage(),
+        );
+      },
+    ),
       // GoRoute(
       //   path: AppRoutes.register,
       //   name: 'register',
