@@ -6,7 +6,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:your_store_app/core/config/env.dart';
 import 'tables/users.dart';
-import 'tables/categories.dart';
 import 'tables/products.dart';
 import 'tables/carts.dart';
 import 'tables/cart_items.dart';
@@ -15,7 +14,6 @@ part 'app_database.g.dart';
 
 @DriftDatabase(tables: [
   Users,
-  Categories,
   Products,
   Carts,
   CartItems,

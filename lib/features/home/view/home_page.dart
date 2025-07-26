@@ -48,7 +48,6 @@ class _HomePageState extends State<HomePage> {
         actions: [
           BlocBuilder<HomePresenter, HomeState>(
             builder: (context, state) {
-              print(state);
               if (state is HomeLoaded && state.categories.isNotEmpty) {
                 return IconButton(
                   icon: const Icon(Icons.category),

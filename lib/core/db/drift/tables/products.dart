@@ -1,5 +1,4 @@
 import 'package:drift/drift.dart';
-import 'categories.dart';
 
 @DataClassName('Product')
 class Products extends Table {
@@ -12,7 +11,6 @@ class Products extends Table {
   RealColumn get rating => real().nullable()();
   IntColumn get stock => integer().withDefault(const Constant(0))();
   TextColumn get sku => text().unique()();
-  IntColumn get categoryId => integer().references(Categories, #id)();
   TextColumn get warrantyInformation => text().nullable()();
   TextColumn get shippingInformation => text().nullable()();
   TextColumn get availabilityStatus => text().nullable()();
