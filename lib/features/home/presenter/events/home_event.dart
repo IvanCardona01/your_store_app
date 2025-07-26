@@ -13,3 +13,12 @@ class LoadMoreProducts extends HomeEvent {
 class RefreshProducts extends HomeEvent {
   const RefreshProducts();
 }
+
+class LoadCategories extends HomeEvent {
+  const LoadCategories();
+}
+
+class SetCategory extends HomeEvent {
+  final String slug;
+  const SetCategory(this.slug);
+}

@@ -1,3 +1,4 @@
+import 'package:your_store_app/features/home/models/category_model.dart';
 import 'package:your_store_app/features/home/models/product_model.dart';
 
 abstract class HomeState {
@@ -10,22 +11,26 @@ class HomeLoading extends HomeState {
 
 class HomeLoaded extends HomeState {
   final List<ProductModel> products;
+  final List<CategoryModel> categories;
   final bool hasMore;
   final bool isLoadingMore;
 
   const HomeLoaded({
     required this.products,
+    required this.categories,
     this.hasMore = true,
     this.isLoadingMore = false,
   });
 
   HomeLoaded copyWith({
     List<ProductModel>? products,
+    List<CategoryModel>? categories,
     bool? hasMore,
     bool? isLoadingMore,
   }) {
     return HomeLoaded(
       products: products ?? this.products,
+      categories: categories ?? this.categories,
       hasMore: hasMore ?? this.hasMore,
       isLoadingMore: isLoadingMore ?? this.isLoadingMore,
     );

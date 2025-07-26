@@ -6,7 +6,7 @@ class GetProductsUseCase {
 
   GetProductsUseCase(this.repository);
 
-  Future<ProductResponse> call({int skip = 0, int limit = 10}) async {
-    return await repository.getProducts(skip: skip, limit: limit);
+  Future<ProductResponse> call({int skip = 0, int limit = 10, String categorySlug = ''}) async {
+    return await repository.getProducts(skip: skip, limit: limit, categorySlug: categorySlug);
   }
 }

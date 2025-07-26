@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:your_store_app/features/home/presenter/home_presenter.dart';
 import 'package:your_store_app/features/home/presenter/states/home_state.dart';
 import 'package:your_store_app/features/home/presenter/events/home_event.dart';
-import 'package:your_store_app/shared/widgets/bottom_sheets/add_to_cart_bottom_sheet.dart';
+import 'package:your_store_app/features/home/widgets/add_to_cart_bottom_sheet.dart';
+import 'package:your_store_app/features/home/widgets/categories_bottom_sheet.dart';
 import 'package:your_store_app/shared/widgets/shimmer_grid.dart';
 
 class HomePage extends StatefulWidget {
@@ -19,6 +20,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    context.read<HomePresenter>().add(LoadCategories());
     context.read<HomePresenter>().add(LoadProducts());
 
     _scrollController.addListener(() {
@@ -41,7 +43,40 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Productos')),
+      appBar: AppBar(
+        title: const Text('Productos'),
+        actions: [
+          BlocBuilder<HomePresenter, HomeState>(
+            builder: (context, state) {
+              print(state);
+              if (state is HomeLoaded && state.categories.isNotEmpty) {
+                return IconButton(
+                  icon: const Icon(Icons.category),
+                  tooltip: 'Categorías',
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(20),
+                        ),
+                      ),
+                      builder: (_) => CategoriesBottomSheet(
+                        categories: state.categories,
+                        onCategorySelected: (slug) {
+                          context.read<HomePresenter>().add(SetCategory(slug));
+                          context.read<HomePresenter>().add(LoadProducts());
+                        },
+                      ),
+                    );
+                  },
+                );
+              }
+              return const Text('No hay categorías');
+            },
+          ),
+        ],
+      ),
       body: BlocBuilder<HomePresenter, HomeState>(
         builder: (context, state) {
           if (state is HomeLoading) {
