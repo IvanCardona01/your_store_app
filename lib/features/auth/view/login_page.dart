@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:your_store_app/app/router/app_routes.dart';
 
 import '../presenter/login_presenter.dart';
@@ -18,6 +19,8 @@ class _LoginPageState extends State<LoginPage> {
   final passCtrl = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
+  bool _passwordVisible = false;
+
   @override
   void dispose() {
     emailCtrl.dispose();
@@ -34,10 +37,7 @@ class _LoginPageState extends State<LoginPage> {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              colors.secondary.withValues(alpha: 0.5),
-              colors.surface,
-            ],
+            colors: [colors.secondary.withValues(alpha: 0.5), colors.surface],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -66,11 +66,14 @@ class _LoginPageState extends State<LoginPage> {
                     if (state is LoginSuccess) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('¡Bienvenido!', style: TextStyle(color: colors.surface)),
+                          content: Text(
+                            '¡Bienvenido!',
+                            style: TextStyle(color: colors.surface),
+                          ),
                           backgroundColor: colors.tertiaryContainer,
                         ),
                       );
-                      Navigator.of(context).pushReplacementNamed(AppRoutes.home);
+                      context.pushReplacement(AppRoutes.home);
                     }
                   },
                   builder: (context, state) {
@@ -78,7 +81,11 @@ class _LoginPageState extends State<LoginPage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         const SizedBox(height: 12),
-                        Icon(Icons.shopping_bag_outlined, size: 72, color: colors.primary),
+                        Icon(
+                          Icons.shopping_bag_outlined,
+                          size: 72,
+                          color: colors.primary,
+                        ),
                         const SizedBox(height: 12),
                         Text(
                           'Bienvenido',
@@ -105,7 +112,10 @@ class _LoginPageState extends State<LoginPage> {
                                 keyboardType: TextInputType.emailAddress,
                                 decoration: InputDecoration(
                                   labelText: 'Email',
-                                  prefixIcon: Icon(Icons.email_outlined, color: colors.secondary),
+                                  prefixIcon: Icon(
+                                    Icons.email_outlined,
+                                    color: colors.secondary,
+                                  ),
                                 ),
                                 validator: (v) {
                                   if (v == null || v.isEmpty) return 'Ingrese su email';
@@ -115,10 +125,24 @@ class _LoginPageState extends State<LoginPage> {
                               const SizedBox(height: 16),
                               TextFormField(
                                 controller: passCtrl,
-                                obscureText: true,
+                                obscureText: !_passwordVisible,
                                 decoration: InputDecoration(
                                   labelText: 'Contraseña',
-                                  prefixIcon: Icon(Icons.lock_outline, color: colors.secondary),
+                                  prefixIcon: Icon(
+                                    Icons.lock_outline,
+                                    color: colors.secondary,
+                                  ),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      _passwordVisible ? Icons.visibility_off : Icons.visibility,
+                                      color: colors.secondary,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        _passwordVisible = !_passwordVisible;
+                                      });
+                                    },
+                                  ),
                                 ),
                                 validator: (v) {
                                   if (v == null || v.isEmpty) return 'Ingrese su contraseña';
@@ -135,22 +159,24 @@ class _LoginPageState extends State<LoginPage> {
                                       : () {
                                           if (_formKey.currentState!.validate()) {
                                             context.read<LoginPresenter>().add(
-                                                  LoginSubmitted(
-                                                    emailCtrl.text.trim(),
-                                                    passCtrl.text.trim(),
-                                                  ),
-                                                );
+                                              LoginSubmitted(
+                                                emailCtrl.text.trim(),
+                                                passCtrl.text.trim(),
+                                              ),
+                                            );
                                           }
                                         },
                                   child: state is LoginLoading
-                                      ? const CircularProgressIndicator(color: Colors.white)
+                                      ? const CircularProgressIndicator(
+                                          color: Colors.white,
+                                        )
                                       : const Text('Ingresar'),
                                 ),
                               ),
                               const SizedBox(height: 12),
                               TextButton(
                                 onPressed: () {
-                                  Navigator.pushNamed(context, AppRoutes.register);
+                                  context.push(AppRoutes.register);
                                 },
                                 child: Text(
                                   '¿No tienes cuenta? Regístrate',

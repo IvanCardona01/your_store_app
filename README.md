@@ -42,3 +42,4 @@ Puntos de mejora
 Guard de autenticación
 Manejo de type alias para acortar rutas
 Encriptar contraseña antes de guardar en la DB
+Persistencia de sesion

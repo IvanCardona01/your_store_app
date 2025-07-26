@@ -1,4 +1,6 @@
 import 'package:get_it/get_it.dart';
+import 'package:your_store_app/features/auth/interactor/register_use_case.dart';
+import 'package:your_store_app/features/auth/presenter/register_presenter.dart';
 
 import '../../core/db/drift/app_database.dart';
 import 'data/auth_repository_impl.dart';
@@ -24,4 +26,15 @@ void initAuth() {
 
   // Presenters
   sl.registerFactory<LoginPresenter>(() => LoginPresenter(sl<LoginUseCase>()));
+}
+
+
+void initAuthRegister() {
+  if (sl.isRegistered<RegisterPresenter>()) return;
+
+  // UseCase
+  sl.registerLazySingleton<RegisterUserUseCase>(() => RegisterUserUseCase(sl<AuthRepository>()));
+
+  // Presenter
+  sl.registerFactory<RegisterPresenter>(() => RegisterPresenter(sl<RegisterUserUseCase>()));
 }

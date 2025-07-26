@@ -104,56 +104,6 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _profileImageMeta = const VerificationMeta(
-    'profileImage',
-  );
-  @override
-  late final GeneratedColumn<String> profileImage = GeneratedColumn<String>(
-    'profile_image',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _createdAtMeta = const VerificationMeta(
-    'createdAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
-    'created_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-    defaultValue: currentDateAndTime,
-  );
-  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
-    'updatedAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
-    'updated_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-    defaultValue: currentDateAndTime,
-  );
-  static const VerificationMeta _isActiveMeta = const VerificationMeta(
-    'isActive',
-  );
-  @override
-  late final GeneratedColumn<bool> isActive = GeneratedColumn<bool>(
-    'is_active',
-    aliasedName,
-    false,
-    type: DriftSqlType.bool,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("is_active" IN (0, 1))',
-    ),
-    defaultValue: const Constant(true),
-  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -165,10 +115,6 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
     address,
     city,
     country,
-    profileImage,
-    createdAt,
-    updatedAt,
-    isActive,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -241,33 +187,6 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
         country.isAcceptableOrUnknown(data['country']!, _countryMeta),
       );
     }
-    if (data.containsKey('profile_image')) {
-      context.handle(
-        _profileImageMeta,
-        profileImage.isAcceptableOrUnknown(
-          data['profile_image']!,
-          _profileImageMeta,
-        ),
-      );
-    }
-    if (data.containsKey('created_at')) {
-      context.handle(
-        _createdAtMeta,
-        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
-      );
-    }
-    if (data.containsKey('updated_at')) {
-      context.handle(
-        _updatedAtMeta,
-        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
-      );
-    }
-    if (data.containsKey('is_active')) {
-      context.handle(
-        _isActiveMeta,
-        isActive.isAcceptableOrUnknown(data['is_active']!, _isActiveMeta),
-      );
-    }
     return context;
   }
 
@@ -313,22 +232,6 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
         DriftSqlType.string,
         data['${effectivePrefix}country'],
       ),
-      profileImage: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}profile_image'],
-      ),
-      createdAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}created_at'],
-      )!,
-      updatedAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}updated_at'],
-      )!,
-      isActive: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}is_active'],
-      )!,
     );
   }
 
@@ -348,10 +251,6 @@ class User extends DataClass implements Insertable<User> {
   final String? address;
   final String? city;
   final String? country;
-  final String? profileImage;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final bool isActive;
   const User({
     required this.id,
     required this.email,
@@ -362,10 +261,6 @@ class User extends DataClass implements Insertable<User> {
     this.address,
     this.city,
     this.country,
-    this.profileImage,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.isActive,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -387,12 +282,6 @@ class User extends DataClass implements Insertable<User> {
     if (!nullToAbsent || country != null) {
       map['country'] = Variable<String>(country);
     }
-    if (!nullToAbsent || profileImage != null) {
-      map['profile_image'] = Variable<String>(profileImage);
-    }
-    map['created_at'] = Variable<DateTime>(createdAt);
-    map['updated_at'] = Variable<DateTime>(updatedAt);
-    map['is_active'] = Variable<bool>(isActive);
     return map;
   }
 
@@ -413,12 +302,6 @@ class User extends DataClass implements Insertable<User> {
       country: country == null && nullToAbsent
           ? const Value.absent()
           : Value(country),
-      profileImage: profileImage == null && nullToAbsent
-          ? const Value.absent()
-          : Value(profileImage),
-      createdAt: Value(createdAt),
-      updatedAt: Value(updatedAt),
-      isActive: Value(isActive),
     );
   }
 
@@ -437,10 +320,6 @@ class User extends DataClass implements Insertable<User> {
       address: serializer.fromJson<String?>(json['address']),
       city: serializer.fromJson<String?>(json['city']),
       country: serializer.fromJson<String?>(json['country']),
-      profileImage: serializer.fromJson<String?>(json['profileImage']),
-      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
-      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
-      isActive: serializer.fromJson<bool>(json['isActive']),
     );
   }
   @override
@@ -456,10 +335,6 @@ class User extends DataClass implements Insertable<User> {
       'address': serializer.toJson<String?>(address),
       'city': serializer.toJson<String?>(city),
       'country': serializer.toJson<String?>(country),
-      'profileImage': serializer.toJson<String?>(profileImage),
-      'createdAt': serializer.toJson<DateTime>(createdAt),
-      'updatedAt': serializer.toJson<DateTime>(updatedAt),
-      'isActive': serializer.toJson<bool>(isActive),
     };
   }
 
@@ -473,10 +348,6 @@ class User extends DataClass implements Insertable<User> {
     Value<String?> address = const Value.absent(),
     Value<String?> city = const Value.absent(),
     Value<String?> country = const Value.absent(),
-    Value<String?> profileImage = const Value.absent(),
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    bool? isActive,
   }) => User(
     id: id ?? this.id,
     email: email ?? this.email,
@@ -487,10 +358,6 @@ class User extends DataClass implements Insertable<User> {
     address: address.present ? address.value : this.address,
     city: city.present ? city.value : this.city,
     country: country.present ? country.value : this.country,
-    profileImage: profileImage.present ? profileImage.value : this.profileImage,
-    createdAt: createdAt ?? this.createdAt,
-    updatedAt: updatedAt ?? this.updatedAt,
-    isActive: isActive ?? this.isActive,
   );
   User copyWithCompanion(UsersCompanion data) {
     return User(
@@ -503,12 +370,6 @@ class User extends DataClass implements Insertable<User> {
       address: data.address.present ? data.address.value : this.address,
       city: data.city.present ? data.city.value : this.city,
       country: data.country.present ? data.country.value : this.country,
-      profileImage: data.profileImage.present
-          ? data.profileImage.value
-          : this.profileImage,
-      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
-      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
-      isActive: data.isActive.present ? data.isActive.value : this.isActive,
     );
   }
 
@@ -523,11 +384,7 @@ class User extends DataClass implements Insertable<User> {
           ..write('phone: $phone, ')
           ..write('address: $address, ')
           ..write('city: $city, ')
-          ..write('country: $country, ')
-          ..write('profileImage: $profileImage, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('isActive: $isActive')
+          ..write('country: $country')
           ..write(')'))
         .toString();
   }
@@ -543,10 +400,6 @@ class User extends DataClass implements Insertable<User> {
     address,
     city,
     country,
-    profileImage,
-    createdAt,
-    updatedAt,
-    isActive,
   );
   @override
   bool operator ==(Object other) =>
@@ -560,11 +413,7 @@ class User extends DataClass implements Insertable<User> {
           other.phone == this.phone &&
           other.address == this.address &&
           other.city == this.city &&
-          other.country == this.country &&
-          other.profileImage == this.profileImage &&
-          other.createdAt == this.createdAt &&
-          other.updatedAt == this.updatedAt &&
-          other.isActive == this.isActive);
+          other.country == this.country);
 }
 
 class UsersCompanion extends UpdateCompanion<User> {
@@ -577,10 +426,6 @@ class UsersCompanion extends UpdateCompanion<User> {
   final Value<String?> address;
   final Value<String?> city;
   final Value<String?> country;
-  final Value<String?> profileImage;
-  final Value<DateTime> createdAt;
-  final Value<DateTime> updatedAt;
-  final Value<bool> isActive;
   const UsersCompanion({
     this.id = const Value.absent(),
     this.email = const Value.absent(),
@@ -591,10 +436,6 @@ class UsersCompanion extends UpdateCompanion<User> {
     this.address = const Value.absent(),
     this.city = const Value.absent(),
     this.country = const Value.absent(),
-    this.profileImage = const Value.absent(),
-    this.createdAt = const Value.absent(),
-    this.updatedAt = const Value.absent(),
-    this.isActive = const Value.absent(),
   });
   UsersCompanion.insert({
     this.id = const Value.absent(),
@@ -606,10 +447,6 @@ class UsersCompanion extends UpdateCompanion<User> {
     this.address = const Value.absent(),
     this.city = const Value.absent(),
     this.country = const Value.absent(),
-    this.profileImage = const Value.absent(),
-    this.createdAt = const Value.absent(),
-    this.updatedAt = const Value.absent(),
-    this.isActive = const Value.absent(),
   }) : email = Value(email),
        password = Value(password),
        firstName = Value(firstName),
@@ -624,10 +461,6 @@ class UsersCompanion extends UpdateCompanion<User> {
     Expression<String>? address,
     Expression<String>? city,
     Expression<String>? country,
-    Expression<String>? profileImage,
-    Expression<DateTime>? createdAt,
-    Expression<DateTime>? updatedAt,
-    Expression<bool>? isActive,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -639,10 +472,6 @@ class UsersCompanion extends UpdateCompanion<User> {
       if (address != null) 'address': address,
       if (city != null) 'city': city,
       if (country != null) 'country': country,
-      if (profileImage != null) 'profile_image': profileImage,
-      if (createdAt != null) 'created_at': createdAt,
-      if (updatedAt != null) 'updated_at': updatedAt,
-      if (isActive != null) 'is_active': isActive,
     });
   }
 
@@ -656,10 +485,6 @@ class UsersCompanion extends UpdateCompanion<User> {
     Value<String?>? address,
     Value<String?>? city,
     Value<String?>? country,
-    Value<String?>? profileImage,
-    Value<DateTime>? createdAt,
-    Value<DateTime>? updatedAt,
-    Value<bool>? isActive,
   }) {
     return UsersCompanion(
       id: id ?? this.id,
@@ -671,10 +496,6 @@ class UsersCompanion extends UpdateCompanion<User> {
       address: address ?? this.address,
       city: city ?? this.city,
       country: country ?? this.country,
-      profileImage: profileImage ?? this.profileImage,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      isActive: isActive ?? this.isActive,
     );
   }
 
@@ -708,18 +529,6 @@ class UsersCompanion extends UpdateCompanion<User> {
     if (country.present) {
       map['country'] = Variable<String>(country.value);
     }
-    if (profileImage.present) {
-      map['profile_image'] = Variable<String>(profileImage.value);
-    }
-    if (createdAt.present) {
-      map['created_at'] = Variable<DateTime>(createdAt.value);
-    }
-    if (updatedAt.present) {
-      map['updated_at'] = Variable<DateTime>(updatedAt.value);
-    }
-    if (isActive.present) {
-      map['is_active'] = Variable<bool>(isActive.value);
-    }
     return map;
   }
 
@@ -734,11 +543,7 @@ class UsersCompanion extends UpdateCompanion<User> {
           ..write('phone: $phone, ')
           ..write('address: $address, ')
           ..write('city: $city, ')
-          ..write('country: $country, ')
-          ..write('profileImage: $profileImage, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('isActive: $isActive')
+          ..write('country: $country')
           ..write(')'))
         .toString();
   }
@@ -2716,10 +2521,6 @@ typedef $$UsersTableCreateCompanionBuilder =
       Value<String?> address,
       Value<String?> city,
       Value<String?> country,
-      Value<String?> profileImage,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
-      Value<bool> isActive,
     });
 typedef $$UsersTableUpdateCompanionBuilder =
     UsersCompanion Function({
@@ -2732,10 +2533,6 @@ typedef $$UsersTableUpdateCompanionBuilder =
       Value<String?> address,
       Value<String?> city,
       Value<String?> country,
-      Value<String?> profileImage,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
-      Value<bool> isActive,
     });
 
 final class $$UsersTableReferences
@@ -2812,26 +2609,6 @@ class $$UsersTableFilterComposer extends Composer<_$AppDatabase, $UsersTable> {
 
   ColumnFilters<String> get country => $composableBuilder(
     column: $table.country,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get profileImage => $composableBuilder(
-    column: $table.profileImage,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<bool> get isActive => $composableBuilder(
-    column: $table.isActive,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -2914,26 +2691,6 @@ class $$UsersTableOrderingComposer
     column: $table.country,
     builder: (column) => ColumnOrderings(column),
   );
-
-  ColumnOrderings<String> get profileImage => $composableBuilder(
-    column: $table.profileImage,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<bool> get isActive => $composableBuilder(
-    column: $table.isActive,
-    builder: (column) => ColumnOrderings(column),
-  );
 }
 
 class $$UsersTableAnnotationComposer
@@ -2971,20 +2728,6 @@ class $$UsersTableAnnotationComposer
 
   GeneratedColumn<String> get country =>
       $composableBuilder(column: $table.country, builder: (column) => column);
-
-  GeneratedColumn<String> get profileImage => $composableBuilder(
-    column: $table.profileImage,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<DateTime> get createdAt =>
-      $composableBuilder(column: $table.createdAt, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get updatedAt =>
-      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
-
-  GeneratedColumn<bool> get isActive =>
-      $composableBuilder(column: $table.isActive, builder: (column) => column);
 
   Expression<T> cartsRefs<T extends Object>(
     Expression<T> Function($$CartsTableAnnotationComposer a) f,
@@ -3049,10 +2792,6 @@ class $$UsersTableTableManager
                 Value<String?> address = const Value.absent(),
                 Value<String?> city = const Value.absent(),
                 Value<String?> country = const Value.absent(),
-                Value<String?> profileImage = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
-                Value<bool> isActive = const Value.absent(),
               }) => UsersCompanion(
                 id: id,
                 email: email,
@@ -3063,10 +2802,6 @@ class $$UsersTableTableManager
                 address: address,
                 city: city,
                 country: country,
-                profileImage: profileImage,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                isActive: isActive,
               ),
           createCompanionCallback:
               ({
@@ -3079,10 +2814,6 @@ class $$UsersTableTableManager
                 Value<String?> address = const Value.absent(),
                 Value<String?> city = const Value.absent(),
                 Value<String?> country = const Value.absent(),
-                Value<String?> profileImage = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
-                Value<bool> isActive = const Value.absent(),
               }) => UsersCompanion.insert(
                 id: id,
                 email: email,
@@ -3093,10 +2824,6 @@ class $$UsersTableTableManager
                 address: address,
                 city: city,
                 country: country,
-                profileImage: profileImage,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                isActive: isActive,
               ),
           withReferenceMapper: (p0) => p0
               .map(
