@@ -70,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                           backgroundColor: colors.tertiaryContainer,
                         ),
                       );
-                      Navigator.of(context).pushReplacementNamed('/home');
+                      Navigator.of(context).pushReplacementNamed(AppRoutes.home);
                     }
                   },
                   builder: (context, state) {

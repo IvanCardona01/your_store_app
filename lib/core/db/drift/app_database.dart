@@ -32,7 +32,7 @@ class AppDatabase extends _$AppDatabase {
       await m.createAll();
     },
     onUpgrade: (Migrator m, int from, int to) async {
-      // Aquí puedes agregar migraciones futuras
+      
     },
   );
 }

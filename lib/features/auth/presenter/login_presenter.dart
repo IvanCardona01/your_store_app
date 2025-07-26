@@ -1,12 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'login_event.dart';
 import 'login_state.dart';
-import '../domain/database_service.dart';
+import '../interactor/login_use_case.dart';
 
 class LoginPresenter extends Bloc<LoginEvent, LoginState> {
-  final DataBaseService _dbService;
+  final LoginUseCase _loginUseCase;
 
-  LoginPresenter(this._dbService) : super(LoginInitial()) {
+  LoginPresenter(this._loginUseCase) : super(LoginInitial()) {
     on<LoginSubmitted>(_onLoginSubmitted);
   }
 
@@ -16,7 +17,7 @@ class LoginPresenter extends Bloc<LoginEvent, LoginState> {
   ) async {
     emit(LoginLoading());
     try {
-      final user = await _dbService.login(event.email, event.password);
+      final user = await _loginUseCase(event.email, event.password);
       if (user == null) {
         emit(LoginFailure('Credenciales inválidas'));
       } else {
