@@ -1,4 +1,4 @@
-import '../../../core/db/drift/app_database.dart';
+import '../../../../core/db/drift/app_database.dart';
 
 abstract class LoginState {}
 

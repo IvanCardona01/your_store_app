@@ -5,8 +5,8 @@ import 'package:your_store_app/app/router/app_routes.dart';
 import 'package:your_store_app/features/auth/models/user_model.dart';
 
 import '../presenter/register_presenter.dart';
-import '../presenter/register_event.dart';
-import '../presenter/register_state.dart';
+import '../presenter/events/register_event.dart';
+import '../presenter/states/register_state.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});

@@ -37,9 +37,11 @@ We use **GoRouter** for declarative navigation handling:
 
 
 
-Puntos de mejora
+Points for Improvement
 
-Guard de autenticación
-Manejo de type alias para acortar rutas
-Encriptar contraseña antes de guardar en la DB
-Persistencia de sesion
+Auth Guard
+Manage type aliases using short paths
+Encrypt passwords by saving them in the database
+Session persistence
+Complete interceptor
+Network logs

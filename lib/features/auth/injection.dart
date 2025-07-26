@@ -1,4 +1,3 @@
-import 'package:get_it/get_it.dart';
 import 'package:your_store_app/features/auth/interactor/register_use_case.dart';
 import 'package:your_store_app/features/auth/presenter/register_presenter.dart';
 
@@ -10,7 +9,7 @@ import 'domain/auth_repository.dart';
 import 'interactor/login_use_case.dart';
 import 'presenter/login_presenter.dart';
 
-final sl = GetIt.instance;
+import '../../core/di/injection.dart';
 
 void initAuth() {
   if (sl.isRegistered<LoginPresenter>()) return;

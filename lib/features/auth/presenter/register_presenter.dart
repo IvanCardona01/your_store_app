@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'register_event.dart';
-import 'register_state.dart';
+import 'events/register_event.dart';
+import 'states/register_state.dart';
 import '../interactor/register_use_case.dart';
 
 class RegisterPresenter extends Bloc<RegisterEvent, RegisterState> {

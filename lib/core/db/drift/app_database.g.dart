@@ -969,10 +969,10 @@ class $ProductsTable extends Products with TableInfo<$ProductsTable, Product> {
       'PRIMARY KEY AUTOINCREMENT',
     ),
   );
-  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
   @override
-  late final GeneratedColumn<String> name = GeneratedColumn<String>(
-    'name',
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
     aliasedName,
     false,
     type: DriftSqlType.string,
@@ -989,6 +989,28 @@ class $ProductsTable extends Products with TableInfo<$ProductsTable, Product> {
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _categoryMeta = const VerificationMeta(
+    'category',
+  );
+  @override
+  late final GeneratedColumn<String> category = GeneratedColumn<String>(
+    'category',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _discountPercentageMeta =
+      const VerificationMeta('discountPercentage');
+  @override
+  late final GeneratedColumn<double> discountPercentage =
+      GeneratedColumn<double>(
+        'discount_percentage',
+        aliasedName,
+        true,
+        type: DriftSqlType.double,
+        requiredDuringInsert: false,
+      );
   static const VerificationMeta _priceMeta = const VerificationMeta('price');
   @override
   late final GeneratedColumn<double> price = GeneratedColumn<double>(
@@ -998,12 +1020,10 @@ class $ProductsTable extends Products with TableInfo<$ProductsTable, Product> {
     type: DriftSqlType.double,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _salePriceMeta = const VerificationMeta(
-    'salePrice',
-  );
+  static const VerificationMeta _ratingMeta = const VerificationMeta('rating');
   @override
-  late final GeneratedColumn<double> salePrice = GeneratedColumn<double>(
-    'sale_price',
+  late final GeneratedColumn<double> rating = GeneratedColumn<double>(
+    'rating',
     aliasedName,
     true,
     type: DriftSqlType.double,
@@ -1043,106 +1063,88 @@ class $ProductsTable extends Products with TableInfo<$ProductsTable, Product> {
       'REFERENCES categories (id)',
     ),
   );
-  static const VerificationMeta _brandMeta = const VerificationMeta('brand');
+  static const VerificationMeta _warrantyInformationMeta =
+      const VerificationMeta('warrantyInformation');
   @override
-  late final GeneratedColumn<String> brand = GeneratedColumn<String>(
-    'brand',
+  late final GeneratedColumn<String> warrantyInformation =
+      GeneratedColumn<String>(
+        'warranty_information',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _shippingInformationMeta =
+      const VerificationMeta('shippingInformation');
+  @override
+  late final GeneratedColumn<String> shippingInformation =
+      GeneratedColumn<String>(
+        'shipping_information',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _availabilityStatusMeta =
+      const VerificationMeta('availabilityStatus');
+  @override
+  late final GeneratedColumn<String> availabilityStatus =
+      GeneratedColumn<String>(
+        'availability_status',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _returnPolicyMeta = const VerificationMeta(
+    'returnPolicy',
+  );
+  @override
+  late final GeneratedColumn<String> returnPolicy = GeneratedColumn<String>(
+    'return_policy',
     aliasedName,
     true,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _weightMeta = const VerificationMeta('weight');
+  static const VerificationMeta _imagesMeta = const VerificationMeta('images');
   @override
-  late final GeneratedColumn<double> weight = GeneratedColumn<double>(
-    'weight',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _dimensionsMeta = const VerificationMeta(
-    'dimensions',
-  );
-  @override
-  late final GeneratedColumn<String> dimensions = GeneratedColumn<String>(
-    'dimensions',
+  late final GeneratedColumn<String> images = GeneratedColumn<String>(
+    'images',
     aliasedName,
     true,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _isActiveMeta = const VerificationMeta(
-    'isActive',
+  static const VerificationMeta _thumbnailMeta = const VerificationMeta(
+    'thumbnail',
   );
   @override
-  late final GeneratedColumn<bool> isActive = GeneratedColumn<bool>(
-    'is_active',
+  late final GeneratedColumn<String> thumbnail = GeneratedColumn<String>(
+    'thumbnail',
     aliasedName,
-    false,
-    type: DriftSqlType.bool,
+    true,
+    type: DriftSqlType.string,
     requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("is_active" IN (0, 1))',
-    ),
-    defaultValue: const Constant(true),
-  );
-  static const VerificationMeta _isFeaturedMeta = const VerificationMeta(
-    'isFeatured',
-  );
-  @override
-  late final GeneratedColumn<bool> isFeatured = GeneratedColumn<bool>(
-    'is_featured',
-    aliasedName,
-    false,
-    type: DriftSqlType.bool,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("is_featured" IN (0, 1))',
-    ),
-    defaultValue: const Constant(false),
-  );
-  static const VerificationMeta _createdAtMeta = const VerificationMeta(
-    'createdAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
-    'created_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-    defaultValue: currentDateAndTime,
-  );
-  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
-    'updatedAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
-    'updated_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-    defaultValue: currentDateAndTime,
   );
   @override
   List<GeneratedColumn> get $columns => [
     id,
-    name,
+    title,
     description,
+    category,
+    discountPercentage,
     price,
-    salePrice,
+    rating,
     stock,
     sku,
     categoryId,
-    brand,
-    weight,
-    dimensions,
-    isActive,
-    isFeatured,
-    createdAt,
-    updatedAt,
+    warrantyInformation,
+    shippingInformation,
+    availabilityStatus,
+    returnPolicy,
+    images,
+    thumbnail,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1159,13 +1161,13 @@ class $ProductsTable extends Products with TableInfo<$ProductsTable, Product> {
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('name')) {
+    if (data.containsKey('title')) {
       context.handle(
-        _nameMeta,
-        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
       );
     } else if (isInserting) {
-      context.missing(_nameMeta);
+      context.missing(_titleMeta);
     }
     if (data.containsKey('description')) {
       context.handle(
@@ -1178,6 +1180,21 @@ class $ProductsTable extends Products with TableInfo<$ProductsTable, Product> {
     } else if (isInserting) {
       context.missing(_descriptionMeta);
     }
+    if (data.containsKey('category')) {
+      context.handle(
+        _categoryMeta,
+        category.isAcceptableOrUnknown(data['category']!, _categoryMeta),
+      );
+    }
+    if (data.containsKey('discount_percentage')) {
+      context.handle(
+        _discountPercentageMeta,
+        discountPercentage.isAcceptableOrUnknown(
+          data['discount_percentage']!,
+          _discountPercentageMeta,
+        ),
+      );
+    }
     if (data.containsKey('price')) {
       context.handle(
         _priceMeta,
@@ -1186,10 +1203,10 @@ class $ProductsTable extends Products with TableInfo<$ProductsTable, Product> {
     } else if (isInserting) {
       context.missing(_priceMeta);
     }
-    if (data.containsKey('sale_price')) {
+    if (data.containsKey('rating')) {
       context.handle(
-        _salePriceMeta,
-        salePrice.isAcceptableOrUnknown(data['sale_price']!, _salePriceMeta),
+        _ratingMeta,
+        rating.isAcceptableOrUnknown(data['rating']!, _ratingMeta),
       );
     }
     if (data.containsKey('stock')) {
@@ -1214,46 +1231,52 @@ class $ProductsTable extends Products with TableInfo<$ProductsTable, Product> {
     } else if (isInserting) {
       context.missing(_categoryIdMeta);
     }
-    if (data.containsKey('brand')) {
+    if (data.containsKey('warranty_information')) {
       context.handle(
-        _brandMeta,
-        brand.isAcceptableOrUnknown(data['brand']!, _brandMeta),
+        _warrantyInformationMeta,
+        warrantyInformation.isAcceptableOrUnknown(
+          data['warranty_information']!,
+          _warrantyInformationMeta,
+        ),
       );
     }
-    if (data.containsKey('weight')) {
+    if (data.containsKey('shipping_information')) {
       context.handle(
-        _weightMeta,
-        weight.isAcceptableOrUnknown(data['weight']!, _weightMeta),
+        _shippingInformationMeta,
+        shippingInformation.isAcceptableOrUnknown(
+          data['shipping_information']!,
+          _shippingInformationMeta,
+        ),
       );
     }
-    if (data.containsKey('dimensions')) {
+    if (data.containsKey('availability_status')) {
       context.handle(
-        _dimensionsMeta,
-        dimensions.isAcceptableOrUnknown(data['dimensions']!, _dimensionsMeta),
+        _availabilityStatusMeta,
+        availabilityStatus.isAcceptableOrUnknown(
+          data['availability_status']!,
+          _availabilityStatusMeta,
+        ),
       );
     }
-    if (data.containsKey('is_active')) {
+    if (data.containsKey('return_policy')) {
       context.handle(
-        _isActiveMeta,
-        isActive.isAcceptableOrUnknown(data['is_active']!, _isActiveMeta),
+        _returnPolicyMeta,
+        returnPolicy.isAcceptableOrUnknown(
+          data['return_policy']!,
+          _returnPolicyMeta,
+        ),
       );
     }
-    if (data.containsKey('is_featured')) {
+    if (data.containsKey('images')) {
       context.handle(
-        _isFeaturedMeta,
-        isFeatured.isAcceptableOrUnknown(data['is_featured']!, _isFeaturedMeta),
+        _imagesMeta,
+        images.isAcceptableOrUnknown(data['images']!, _imagesMeta),
       );
     }
-    if (data.containsKey('created_at')) {
+    if (data.containsKey('thumbnail')) {
       context.handle(
-        _createdAtMeta,
-        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
-      );
-    }
-    if (data.containsKey('updated_at')) {
-      context.handle(
-        _updatedAtMeta,
-        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+        _thumbnailMeta,
+        thumbnail.isAcceptableOrUnknown(data['thumbnail']!, _thumbnailMeta),
       );
     }
     return context;
@@ -1269,21 +1292,29 @@ class $ProductsTable extends Products with TableInfo<$ProductsTable, Product> {
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
-      name: attachedDatabase.typeMapping.read(
+      title: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}name'],
+        data['${effectivePrefix}title'],
       )!,
       description: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}description'],
       )!,
+      category: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}category'],
+      ),
+      discountPercentage: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}discount_percentage'],
+      ),
       price: attachedDatabase.typeMapping.read(
         DriftSqlType.double,
         data['${effectivePrefix}price'],
       )!,
-      salePrice: attachedDatabase.typeMapping.read(
+      rating: attachedDatabase.typeMapping.read(
         DriftSqlType.double,
-        data['${effectivePrefix}sale_price'],
+        data['${effectivePrefix}rating'],
       ),
       stock: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
@@ -1297,34 +1328,30 @@ class $ProductsTable extends Products with TableInfo<$ProductsTable, Product> {
         DriftSqlType.int,
         data['${effectivePrefix}category_id'],
       )!,
-      brand: attachedDatabase.typeMapping.read(
+      warrantyInformation: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}brand'],
+        data['${effectivePrefix}warranty_information'],
       ),
-      weight: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}weight'],
-      ),
-      dimensions: attachedDatabase.typeMapping.read(
+      shippingInformation: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}dimensions'],
+        data['${effectivePrefix}shipping_information'],
       ),
-      isActive: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}is_active'],
-      )!,
-      isFeatured: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}is_featured'],
-      )!,
-      createdAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}created_at'],
-      )!,
-      updatedAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}updated_at'],
-      )!,
+      availabilityStatus: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}availability_status'],
+      ),
+      returnPolicy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}return_policy'],
+      ),
+      images: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}images'],
+      ),
+      thumbnail: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}thumbnail'],
+      ),
     );
   }
 
@@ -1336,91 +1363,115 @@ class $ProductsTable extends Products with TableInfo<$ProductsTable, Product> {
 
 class Product extends DataClass implements Insertable<Product> {
   final int id;
-  final String name;
+  final String title;
   final String description;
+  final String? category;
+  final double? discountPercentage;
   final double price;
-  final double? salePrice;
+  final double? rating;
   final int stock;
   final String sku;
   final int categoryId;
-  final String? brand;
-  final double? weight;
-  final String? dimensions;
-  final bool isActive;
-  final bool isFeatured;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  final String? warrantyInformation;
+  final String? shippingInformation;
+  final String? availabilityStatus;
+  final String? returnPolicy;
+  final String? images;
+  final String? thumbnail;
   const Product({
     required this.id,
-    required this.name,
+    required this.title,
     required this.description,
+    this.category,
+    this.discountPercentage,
     required this.price,
-    this.salePrice,
+    this.rating,
     required this.stock,
     required this.sku,
     required this.categoryId,
-    this.brand,
-    this.weight,
-    this.dimensions,
-    required this.isActive,
-    required this.isFeatured,
-    required this.createdAt,
-    required this.updatedAt,
+    this.warrantyInformation,
+    this.shippingInformation,
+    this.availabilityStatus,
+    this.returnPolicy,
+    this.images,
+    this.thumbnail,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['name'] = Variable<String>(name);
+    map['title'] = Variable<String>(title);
     map['description'] = Variable<String>(description);
+    if (!nullToAbsent || category != null) {
+      map['category'] = Variable<String>(category);
+    }
+    if (!nullToAbsent || discountPercentage != null) {
+      map['discount_percentage'] = Variable<double>(discountPercentage);
+    }
     map['price'] = Variable<double>(price);
-    if (!nullToAbsent || salePrice != null) {
-      map['sale_price'] = Variable<double>(salePrice);
+    if (!nullToAbsent || rating != null) {
+      map['rating'] = Variable<double>(rating);
     }
     map['stock'] = Variable<int>(stock);
     map['sku'] = Variable<String>(sku);
     map['category_id'] = Variable<int>(categoryId);
-    if (!nullToAbsent || brand != null) {
-      map['brand'] = Variable<String>(brand);
+    if (!nullToAbsent || warrantyInformation != null) {
+      map['warranty_information'] = Variable<String>(warrantyInformation);
     }
-    if (!nullToAbsent || weight != null) {
-      map['weight'] = Variable<double>(weight);
+    if (!nullToAbsent || shippingInformation != null) {
+      map['shipping_information'] = Variable<String>(shippingInformation);
     }
-    if (!nullToAbsent || dimensions != null) {
-      map['dimensions'] = Variable<String>(dimensions);
+    if (!nullToAbsent || availabilityStatus != null) {
+      map['availability_status'] = Variable<String>(availabilityStatus);
     }
-    map['is_active'] = Variable<bool>(isActive);
-    map['is_featured'] = Variable<bool>(isFeatured);
-    map['created_at'] = Variable<DateTime>(createdAt);
-    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || returnPolicy != null) {
+      map['return_policy'] = Variable<String>(returnPolicy);
+    }
+    if (!nullToAbsent || images != null) {
+      map['images'] = Variable<String>(images);
+    }
+    if (!nullToAbsent || thumbnail != null) {
+      map['thumbnail'] = Variable<String>(thumbnail);
+    }
     return map;
   }
 
   ProductsCompanion toCompanion(bool nullToAbsent) {
     return ProductsCompanion(
       id: Value(id),
-      name: Value(name),
+      title: Value(title),
       description: Value(description),
-      price: Value(price),
-      salePrice: salePrice == null && nullToAbsent
+      category: category == null && nullToAbsent
           ? const Value.absent()
-          : Value(salePrice),
+          : Value(category),
+      discountPercentage: discountPercentage == null && nullToAbsent
+          ? const Value.absent()
+          : Value(discountPercentage),
+      price: Value(price),
+      rating: rating == null && nullToAbsent
+          ? const Value.absent()
+          : Value(rating),
       stock: Value(stock),
       sku: Value(sku),
       categoryId: Value(categoryId),
-      brand: brand == null && nullToAbsent
+      warrantyInformation: warrantyInformation == null && nullToAbsent
           ? const Value.absent()
-          : Value(brand),
-      weight: weight == null && nullToAbsent
+          : Value(warrantyInformation),
+      shippingInformation: shippingInformation == null && nullToAbsent
           ? const Value.absent()
-          : Value(weight),
-      dimensions: dimensions == null && nullToAbsent
+          : Value(shippingInformation),
+      availabilityStatus: availabilityStatus == null && nullToAbsent
           ? const Value.absent()
-          : Value(dimensions),
-      isActive: Value(isActive),
-      isFeatured: Value(isFeatured),
-      createdAt: Value(createdAt),
-      updatedAt: Value(updatedAt),
+          : Value(availabilityStatus),
+      returnPolicy: returnPolicy == null && nullToAbsent
+          ? const Value.absent()
+          : Value(returnPolicy),
+      images: images == null && nullToAbsent
+          ? const Value.absent()
+          : Value(images),
+      thumbnail: thumbnail == null && nullToAbsent
+          ? const Value.absent()
+          : Value(thumbnail),
     );
   }
 
@@ -1431,20 +1482,29 @@ class Product extends DataClass implements Insertable<Product> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Product(
       id: serializer.fromJson<int>(json['id']),
-      name: serializer.fromJson<String>(json['name']),
+      title: serializer.fromJson<String>(json['title']),
       description: serializer.fromJson<String>(json['description']),
+      category: serializer.fromJson<String?>(json['category']),
+      discountPercentage: serializer.fromJson<double?>(
+        json['discountPercentage'],
+      ),
       price: serializer.fromJson<double>(json['price']),
-      salePrice: serializer.fromJson<double?>(json['salePrice']),
+      rating: serializer.fromJson<double?>(json['rating']),
       stock: serializer.fromJson<int>(json['stock']),
       sku: serializer.fromJson<String>(json['sku']),
       categoryId: serializer.fromJson<int>(json['categoryId']),
-      brand: serializer.fromJson<String?>(json['brand']),
-      weight: serializer.fromJson<double?>(json['weight']),
-      dimensions: serializer.fromJson<String?>(json['dimensions']),
-      isActive: serializer.fromJson<bool>(json['isActive']),
-      isFeatured: serializer.fromJson<bool>(json['isFeatured']),
-      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
-      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      warrantyInformation: serializer.fromJson<String?>(
+        json['warrantyInformation'],
+      ),
+      shippingInformation: serializer.fromJson<String?>(
+        json['shippingInformation'],
+      ),
+      availabilityStatus: serializer.fromJson<String?>(
+        json['availabilityStatus'],
+      ),
+      returnPolicy: serializer.fromJson<String?>(json['returnPolicy']),
+      images: serializer.fromJson<String?>(json['images']),
+      thumbnail: serializer.fromJson<String?>(json['thumbnail']),
     );
   }
   @override
@@ -1452,81 +1512,99 @@ class Product extends DataClass implements Insertable<Product> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'name': serializer.toJson<String>(name),
+      'title': serializer.toJson<String>(title),
       'description': serializer.toJson<String>(description),
+      'category': serializer.toJson<String?>(category),
+      'discountPercentage': serializer.toJson<double?>(discountPercentage),
       'price': serializer.toJson<double>(price),
-      'salePrice': serializer.toJson<double?>(salePrice),
+      'rating': serializer.toJson<double?>(rating),
       'stock': serializer.toJson<int>(stock),
       'sku': serializer.toJson<String>(sku),
       'categoryId': serializer.toJson<int>(categoryId),
-      'brand': serializer.toJson<String?>(brand),
-      'weight': serializer.toJson<double?>(weight),
-      'dimensions': serializer.toJson<String?>(dimensions),
-      'isActive': serializer.toJson<bool>(isActive),
-      'isFeatured': serializer.toJson<bool>(isFeatured),
-      'createdAt': serializer.toJson<DateTime>(createdAt),
-      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'warrantyInformation': serializer.toJson<String?>(warrantyInformation),
+      'shippingInformation': serializer.toJson<String?>(shippingInformation),
+      'availabilityStatus': serializer.toJson<String?>(availabilityStatus),
+      'returnPolicy': serializer.toJson<String?>(returnPolicy),
+      'images': serializer.toJson<String?>(images),
+      'thumbnail': serializer.toJson<String?>(thumbnail),
     };
   }
 
   Product copyWith({
     int? id,
-    String? name,
+    String? title,
     String? description,
+    Value<String?> category = const Value.absent(),
+    Value<double?> discountPercentage = const Value.absent(),
     double? price,
-    Value<double?> salePrice = const Value.absent(),
+    Value<double?> rating = const Value.absent(),
     int? stock,
     String? sku,
     int? categoryId,
-    Value<String?> brand = const Value.absent(),
-    Value<double?> weight = const Value.absent(),
-    Value<String?> dimensions = const Value.absent(),
-    bool? isActive,
-    bool? isFeatured,
-    DateTime? createdAt,
-    DateTime? updatedAt,
+    Value<String?> warrantyInformation = const Value.absent(),
+    Value<String?> shippingInformation = const Value.absent(),
+    Value<String?> availabilityStatus = const Value.absent(),
+    Value<String?> returnPolicy = const Value.absent(),
+    Value<String?> images = const Value.absent(),
+    Value<String?> thumbnail = const Value.absent(),
   }) => Product(
     id: id ?? this.id,
-    name: name ?? this.name,
+    title: title ?? this.title,
     description: description ?? this.description,
+    category: category.present ? category.value : this.category,
+    discountPercentage: discountPercentage.present
+        ? discountPercentage.value
+        : this.discountPercentage,
     price: price ?? this.price,
-    salePrice: salePrice.present ? salePrice.value : this.salePrice,
+    rating: rating.present ? rating.value : this.rating,
     stock: stock ?? this.stock,
     sku: sku ?? this.sku,
     categoryId: categoryId ?? this.categoryId,
-    brand: brand.present ? brand.value : this.brand,
-    weight: weight.present ? weight.value : this.weight,
-    dimensions: dimensions.present ? dimensions.value : this.dimensions,
-    isActive: isActive ?? this.isActive,
-    isFeatured: isFeatured ?? this.isFeatured,
-    createdAt: createdAt ?? this.createdAt,
-    updatedAt: updatedAt ?? this.updatedAt,
+    warrantyInformation: warrantyInformation.present
+        ? warrantyInformation.value
+        : this.warrantyInformation,
+    shippingInformation: shippingInformation.present
+        ? shippingInformation.value
+        : this.shippingInformation,
+    availabilityStatus: availabilityStatus.present
+        ? availabilityStatus.value
+        : this.availabilityStatus,
+    returnPolicy: returnPolicy.present ? returnPolicy.value : this.returnPolicy,
+    images: images.present ? images.value : this.images,
+    thumbnail: thumbnail.present ? thumbnail.value : this.thumbnail,
   );
   Product copyWithCompanion(ProductsCompanion data) {
     return Product(
       id: data.id.present ? data.id.value : this.id,
-      name: data.name.present ? data.name.value : this.name,
+      title: data.title.present ? data.title.value : this.title,
       description: data.description.present
           ? data.description.value
           : this.description,
+      category: data.category.present ? data.category.value : this.category,
+      discountPercentage: data.discountPercentage.present
+          ? data.discountPercentage.value
+          : this.discountPercentage,
       price: data.price.present ? data.price.value : this.price,
-      salePrice: data.salePrice.present ? data.salePrice.value : this.salePrice,
+      rating: data.rating.present ? data.rating.value : this.rating,
       stock: data.stock.present ? data.stock.value : this.stock,
       sku: data.sku.present ? data.sku.value : this.sku,
       categoryId: data.categoryId.present
           ? data.categoryId.value
           : this.categoryId,
-      brand: data.brand.present ? data.brand.value : this.brand,
-      weight: data.weight.present ? data.weight.value : this.weight,
-      dimensions: data.dimensions.present
-          ? data.dimensions.value
-          : this.dimensions,
-      isActive: data.isActive.present ? data.isActive.value : this.isActive,
-      isFeatured: data.isFeatured.present
-          ? data.isFeatured.value
-          : this.isFeatured,
-      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
-      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      warrantyInformation: data.warrantyInformation.present
+          ? data.warrantyInformation.value
+          : this.warrantyInformation,
+      shippingInformation: data.shippingInformation.present
+          ? data.shippingInformation.value
+          : this.shippingInformation,
+      availabilityStatus: data.availabilityStatus.present
+          ? data.availabilityStatus.value
+          : this.availabilityStatus,
+      returnPolicy: data.returnPolicy.present
+          ? data.returnPolicy.value
+          : this.returnPolicy,
+      images: data.images.present ? data.images.value : this.images,
+      thumbnail: data.thumbnail.present ? data.thumbnail.value : this.thumbnail,
     );
   }
 
@@ -1534,20 +1612,21 @@ class Product extends DataClass implements Insertable<Product> {
   String toString() {
     return (StringBuffer('Product(')
           ..write('id: $id, ')
-          ..write('name: $name, ')
+          ..write('title: $title, ')
           ..write('description: $description, ')
+          ..write('category: $category, ')
+          ..write('discountPercentage: $discountPercentage, ')
           ..write('price: $price, ')
-          ..write('salePrice: $salePrice, ')
+          ..write('rating: $rating, ')
           ..write('stock: $stock, ')
           ..write('sku: $sku, ')
           ..write('categoryId: $categoryId, ')
-          ..write('brand: $brand, ')
-          ..write('weight: $weight, ')
-          ..write('dimensions: $dimensions, ')
-          ..write('isActive: $isActive, ')
-          ..write('isFeatured: $isFeatured, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt')
+          ..write('warrantyInformation: $warrantyInformation, ')
+          ..write('shippingInformation: $shippingInformation, ')
+          ..write('availabilityStatus: $availabilityStatus, ')
+          ..write('returnPolicy: $returnPolicy, ')
+          ..write('images: $images, ')
+          ..write('thumbnail: $thumbnail')
           ..write(')'))
         .toString();
   }
@@ -1555,165 +1634,176 @@ class Product extends DataClass implements Insertable<Product> {
   @override
   int get hashCode => Object.hash(
     id,
-    name,
+    title,
     description,
+    category,
+    discountPercentage,
     price,
-    salePrice,
+    rating,
     stock,
     sku,
     categoryId,
-    brand,
-    weight,
-    dimensions,
-    isActive,
-    isFeatured,
-    createdAt,
-    updatedAt,
+    warrantyInformation,
+    shippingInformation,
+    availabilityStatus,
+    returnPolicy,
+    images,
+    thumbnail,
   );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Product &&
           other.id == this.id &&
-          other.name == this.name &&
+          other.title == this.title &&
           other.description == this.description &&
+          other.category == this.category &&
+          other.discountPercentage == this.discountPercentage &&
           other.price == this.price &&
-          other.salePrice == this.salePrice &&
+          other.rating == this.rating &&
           other.stock == this.stock &&
           other.sku == this.sku &&
           other.categoryId == this.categoryId &&
-          other.brand == this.brand &&
-          other.weight == this.weight &&
-          other.dimensions == this.dimensions &&
-          other.isActive == this.isActive &&
-          other.isFeatured == this.isFeatured &&
-          other.createdAt == this.createdAt &&
-          other.updatedAt == this.updatedAt);
+          other.warrantyInformation == this.warrantyInformation &&
+          other.shippingInformation == this.shippingInformation &&
+          other.availabilityStatus == this.availabilityStatus &&
+          other.returnPolicy == this.returnPolicy &&
+          other.images == this.images &&
+          other.thumbnail == this.thumbnail);
 }
 
 class ProductsCompanion extends UpdateCompanion<Product> {
   final Value<int> id;
-  final Value<String> name;
+  final Value<String> title;
   final Value<String> description;
+  final Value<String?> category;
+  final Value<double?> discountPercentage;
   final Value<double> price;
-  final Value<double?> salePrice;
+  final Value<double?> rating;
   final Value<int> stock;
   final Value<String> sku;
   final Value<int> categoryId;
-  final Value<String?> brand;
-  final Value<double?> weight;
-  final Value<String?> dimensions;
-  final Value<bool> isActive;
-  final Value<bool> isFeatured;
-  final Value<DateTime> createdAt;
-  final Value<DateTime> updatedAt;
+  final Value<String?> warrantyInformation;
+  final Value<String?> shippingInformation;
+  final Value<String?> availabilityStatus;
+  final Value<String?> returnPolicy;
+  final Value<String?> images;
+  final Value<String?> thumbnail;
   const ProductsCompanion({
     this.id = const Value.absent(),
-    this.name = const Value.absent(),
+    this.title = const Value.absent(),
     this.description = const Value.absent(),
+    this.category = const Value.absent(),
+    this.discountPercentage = const Value.absent(),
     this.price = const Value.absent(),
-    this.salePrice = const Value.absent(),
+    this.rating = const Value.absent(),
     this.stock = const Value.absent(),
     this.sku = const Value.absent(),
     this.categoryId = const Value.absent(),
-    this.brand = const Value.absent(),
-    this.weight = const Value.absent(),
-    this.dimensions = const Value.absent(),
-    this.isActive = const Value.absent(),
-    this.isFeatured = const Value.absent(),
-    this.createdAt = const Value.absent(),
-    this.updatedAt = const Value.absent(),
+    this.warrantyInformation = const Value.absent(),
+    this.shippingInformation = const Value.absent(),
+    this.availabilityStatus = const Value.absent(),
+    this.returnPolicy = const Value.absent(),
+    this.images = const Value.absent(),
+    this.thumbnail = const Value.absent(),
   });
   ProductsCompanion.insert({
     this.id = const Value.absent(),
-    required String name,
+    required String title,
     required String description,
+    this.category = const Value.absent(),
+    this.discountPercentage = const Value.absent(),
     required double price,
-    this.salePrice = const Value.absent(),
+    this.rating = const Value.absent(),
     this.stock = const Value.absent(),
     required String sku,
     required int categoryId,
-    this.brand = const Value.absent(),
-    this.weight = const Value.absent(),
-    this.dimensions = const Value.absent(),
-    this.isActive = const Value.absent(),
-    this.isFeatured = const Value.absent(),
-    this.createdAt = const Value.absent(),
-    this.updatedAt = const Value.absent(),
-  }) : name = Value(name),
+    this.warrantyInformation = const Value.absent(),
+    this.shippingInformation = const Value.absent(),
+    this.availabilityStatus = const Value.absent(),
+    this.returnPolicy = const Value.absent(),
+    this.images = const Value.absent(),
+    this.thumbnail = const Value.absent(),
+  }) : title = Value(title),
        description = Value(description),
        price = Value(price),
        sku = Value(sku),
        categoryId = Value(categoryId);
   static Insertable<Product> custom({
     Expression<int>? id,
-    Expression<String>? name,
+    Expression<String>? title,
     Expression<String>? description,
+    Expression<String>? category,
+    Expression<double>? discountPercentage,
     Expression<double>? price,
-    Expression<double>? salePrice,
+    Expression<double>? rating,
     Expression<int>? stock,
     Expression<String>? sku,
     Expression<int>? categoryId,
-    Expression<String>? brand,
-    Expression<double>? weight,
-    Expression<String>? dimensions,
-    Expression<bool>? isActive,
-    Expression<bool>? isFeatured,
-    Expression<DateTime>? createdAt,
-    Expression<DateTime>? updatedAt,
+    Expression<String>? warrantyInformation,
+    Expression<String>? shippingInformation,
+    Expression<String>? availabilityStatus,
+    Expression<String>? returnPolicy,
+    Expression<String>? images,
+    Expression<String>? thumbnail,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (name != null) 'name': name,
+      if (title != null) 'title': title,
       if (description != null) 'description': description,
+      if (category != null) 'category': category,
+      if (discountPercentage != null) 'discount_percentage': discountPercentage,
       if (price != null) 'price': price,
-      if (salePrice != null) 'sale_price': salePrice,
+      if (rating != null) 'rating': rating,
       if (stock != null) 'stock': stock,
       if (sku != null) 'sku': sku,
       if (categoryId != null) 'category_id': categoryId,
-      if (brand != null) 'brand': brand,
-      if (weight != null) 'weight': weight,
-      if (dimensions != null) 'dimensions': dimensions,
-      if (isActive != null) 'is_active': isActive,
-      if (isFeatured != null) 'is_featured': isFeatured,
-      if (createdAt != null) 'created_at': createdAt,
-      if (updatedAt != null) 'updated_at': updatedAt,
+      if (warrantyInformation != null)
+        'warranty_information': warrantyInformation,
+      if (shippingInformation != null)
+        'shipping_information': shippingInformation,
+      if (availabilityStatus != null) 'availability_status': availabilityStatus,
+      if (returnPolicy != null) 'return_policy': returnPolicy,
+      if (images != null) 'images': images,
+      if (thumbnail != null) 'thumbnail': thumbnail,
     });
   }
 
   ProductsCompanion copyWith({
     Value<int>? id,
-    Value<String>? name,
+    Value<String>? title,
     Value<String>? description,
+    Value<String?>? category,
+    Value<double?>? discountPercentage,
     Value<double>? price,
-    Value<double?>? salePrice,
+    Value<double?>? rating,
     Value<int>? stock,
     Value<String>? sku,
     Value<int>? categoryId,
-    Value<String?>? brand,
-    Value<double?>? weight,
-    Value<String?>? dimensions,
-    Value<bool>? isActive,
-    Value<bool>? isFeatured,
-    Value<DateTime>? createdAt,
-    Value<DateTime>? updatedAt,
+    Value<String?>? warrantyInformation,
+    Value<String?>? shippingInformation,
+    Value<String?>? availabilityStatus,
+    Value<String?>? returnPolicy,
+    Value<String?>? images,
+    Value<String?>? thumbnail,
   }) {
     return ProductsCompanion(
       id: id ?? this.id,
-      name: name ?? this.name,
+      title: title ?? this.title,
       description: description ?? this.description,
+      category: category ?? this.category,
+      discountPercentage: discountPercentage ?? this.discountPercentage,
       price: price ?? this.price,
-      salePrice: salePrice ?? this.salePrice,
+      rating: rating ?? this.rating,
       stock: stock ?? this.stock,
       sku: sku ?? this.sku,
       categoryId: categoryId ?? this.categoryId,
-      brand: brand ?? this.brand,
-      weight: weight ?? this.weight,
-      dimensions: dimensions ?? this.dimensions,
-      isActive: isActive ?? this.isActive,
-      isFeatured: isFeatured ?? this.isFeatured,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
+      warrantyInformation: warrantyInformation ?? this.warrantyInformation,
+      shippingInformation: shippingInformation ?? this.shippingInformation,
+      availabilityStatus: availabilityStatus ?? this.availabilityStatus,
+      returnPolicy: returnPolicy ?? this.returnPolicy,
+      images: images ?? this.images,
+      thumbnail: thumbnail ?? this.thumbnail,
     );
   }
 
@@ -1723,17 +1813,23 @@ class ProductsCompanion extends UpdateCompanion<Product> {
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
     }
     if (description.present) {
       map['description'] = Variable<String>(description.value);
     }
+    if (category.present) {
+      map['category'] = Variable<String>(category.value);
+    }
+    if (discountPercentage.present) {
+      map['discount_percentage'] = Variable<double>(discountPercentage.value);
+    }
     if (price.present) {
       map['price'] = Variable<double>(price.value);
     }
-    if (salePrice.present) {
-      map['sale_price'] = Variable<double>(salePrice.value);
+    if (rating.present) {
+      map['rating'] = Variable<double>(rating.value);
     }
     if (stock.present) {
       map['stock'] = Variable<int>(stock.value);
@@ -1744,26 +1840,23 @@ class ProductsCompanion extends UpdateCompanion<Product> {
     if (categoryId.present) {
       map['category_id'] = Variable<int>(categoryId.value);
     }
-    if (brand.present) {
-      map['brand'] = Variable<String>(brand.value);
+    if (warrantyInformation.present) {
+      map['warranty_information'] = Variable<String>(warrantyInformation.value);
     }
-    if (weight.present) {
-      map['weight'] = Variable<double>(weight.value);
+    if (shippingInformation.present) {
+      map['shipping_information'] = Variable<String>(shippingInformation.value);
     }
-    if (dimensions.present) {
-      map['dimensions'] = Variable<String>(dimensions.value);
+    if (availabilityStatus.present) {
+      map['availability_status'] = Variable<String>(availabilityStatus.value);
     }
-    if (isActive.present) {
-      map['is_active'] = Variable<bool>(isActive.value);
+    if (returnPolicy.present) {
+      map['return_policy'] = Variable<String>(returnPolicy.value);
     }
-    if (isFeatured.present) {
-      map['is_featured'] = Variable<bool>(isFeatured.value);
+    if (images.present) {
+      map['images'] = Variable<String>(images.value);
     }
-    if (createdAt.present) {
-      map['created_at'] = Variable<DateTime>(createdAt.value);
-    }
-    if (updatedAt.present) {
-      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    if (thumbnail.present) {
+      map['thumbnail'] = Variable<String>(thumbnail.value);
     }
     return map;
   }
@@ -1772,20 +1865,21 @@ class ProductsCompanion extends UpdateCompanion<Product> {
   String toString() {
     return (StringBuffer('ProductsCompanion(')
           ..write('id: $id, ')
-          ..write('name: $name, ')
+          ..write('title: $title, ')
           ..write('description: $description, ')
+          ..write('category: $category, ')
+          ..write('discountPercentage: $discountPercentage, ')
           ..write('price: $price, ')
-          ..write('salePrice: $salePrice, ')
+          ..write('rating: $rating, ')
           ..write('stock: $stock, ')
           ..write('sku: $sku, ')
           ..write('categoryId: $categoryId, ')
-          ..write('brand: $brand, ')
-          ..write('weight: $weight, ')
-          ..write('dimensions: $dimensions, ')
-          ..write('isActive: $isActive, ')
-          ..write('isFeatured: $isFeatured, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt')
+          ..write('warrantyInformation: $warrantyInformation, ')
+          ..write('shippingInformation: $shippingInformation, ')
+          ..write('availabilityStatus: $availabilityStatus, ')
+          ..write('returnPolicy: $returnPolicy, ')
+          ..write('images: $images, ')
+          ..write('thumbnail: $thumbnail')
           ..write(')'))
         .toString();
   }
@@ -3192,38 +3286,40 @@ typedef $$CategoriesTableProcessedTableManager =
 typedef $$ProductsTableCreateCompanionBuilder =
     ProductsCompanion Function({
       Value<int> id,
-      required String name,
+      required String title,
       required String description,
+      Value<String?> category,
+      Value<double?> discountPercentage,
       required double price,
-      Value<double?> salePrice,
+      Value<double?> rating,
       Value<int> stock,
       required String sku,
       required int categoryId,
-      Value<String?> brand,
-      Value<double?> weight,
-      Value<String?> dimensions,
-      Value<bool> isActive,
-      Value<bool> isFeatured,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
+      Value<String?> warrantyInformation,
+      Value<String?> shippingInformation,
+      Value<String?> availabilityStatus,
+      Value<String?> returnPolicy,
+      Value<String?> images,
+      Value<String?> thumbnail,
     });
 typedef $$ProductsTableUpdateCompanionBuilder =
     ProductsCompanion Function({
       Value<int> id,
-      Value<String> name,
+      Value<String> title,
       Value<String> description,
+      Value<String?> category,
+      Value<double?> discountPercentage,
       Value<double> price,
-      Value<double?> salePrice,
+      Value<double?> rating,
       Value<int> stock,
       Value<String> sku,
       Value<int> categoryId,
-      Value<String?> brand,
-      Value<double?> weight,
-      Value<String?> dimensions,
-      Value<bool> isActive,
-      Value<bool> isFeatured,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
+      Value<String?> warrantyInformation,
+      Value<String?> shippingInformation,
+      Value<String?> availabilityStatus,
+      Value<String?> returnPolicy,
+      Value<String?> images,
+      Value<String?> thumbnail,
     });
 
 final class $$ProductsTableReferences
@@ -3282,8 +3378,8 @@ class $$ProductsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get name => $composableBuilder(
-    column: $table.name,
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -3292,13 +3388,23 @@ class $$ProductsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get discountPercentage => $composableBuilder(
+    column: $table.discountPercentage,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<double> get price => $composableBuilder(
     column: $table.price,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<double> get salePrice => $composableBuilder(
-    column: $table.salePrice,
+  ColumnFilters<double> get rating => $composableBuilder(
+    column: $table.rating,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -3312,38 +3418,33 @@ class $$ProductsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get brand => $composableBuilder(
-    column: $table.brand,
+  ColumnFilters<String> get warrantyInformation => $composableBuilder(
+    column: $table.warrantyInformation,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<double> get weight => $composableBuilder(
-    column: $table.weight,
+  ColumnFilters<String> get shippingInformation => $composableBuilder(
+    column: $table.shippingInformation,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get dimensions => $composableBuilder(
-    column: $table.dimensions,
+  ColumnFilters<String> get availabilityStatus => $composableBuilder(
+    column: $table.availabilityStatus,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<bool> get isActive => $composableBuilder(
-    column: $table.isActive,
+  ColumnFilters<String> get returnPolicy => $composableBuilder(
+    column: $table.returnPolicy,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<bool> get isFeatured => $composableBuilder(
-    column: $table.isFeatured,
+  ColumnFilters<String> get images => $composableBuilder(
+    column: $table.images,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
+  ColumnFilters<String> get thumbnail => $composableBuilder(
+    column: $table.thumbnail,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -3410,8 +3511,8 @@ class $$ProductsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get name => $composableBuilder(
-    column: $table.name,
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -3420,13 +3521,23 @@ class $$ProductsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get discountPercentage => $composableBuilder(
+    column: $table.discountPercentage,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<double> get price => $composableBuilder(
     column: $table.price,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<double> get salePrice => $composableBuilder(
-    column: $table.salePrice,
+  ColumnOrderings<double> get rating => $composableBuilder(
+    column: $table.rating,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -3440,38 +3551,33 @@ class $$ProductsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get brand => $composableBuilder(
-    column: $table.brand,
+  ColumnOrderings<String> get warrantyInformation => $composableBuilder(
+    column: $table.warrantyInformation,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<double> get weight => $composableBuilder(
-    column: $table.weight,
+  ColumnOrderings<String> get shippingInformation => $composableBuilder(
+    column: $table.shippingInformation,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get dimensions => $composableBuilder(
-    column: $table.dimensions,
+  ColumnOrderings<String> get availabilityStatus => $composableBuilder(
+    column: $table.availabilityStatus,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<bool> get isActive => $composableBuilder(
-    column: $table.isActive,
+  ColumnOrderings<String> get returnPolicy => $composableBuilder(
+    column: $table.returnPolicy,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<bool> get isFeatured => $composableBuilder(
-    column: $table.isFeatured,
+  ColumnOrderings<String> get images => $composableBuilder(
+    column: $table.images,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
+  ColumnOrderings<String> get thumbnail => $composableBuilder(
+    column: $table.thumbnail,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -3511,19 +3617,27 @@ class $$ProductsTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<String> get name =>
-      $composableBuilder(column: $table.name, builder: (column) => column);
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
 
   GeneratedColumn<String> get description => $composableBuilder(
     column: $table.description,
     builder: (column) => column,
   );
 
+  GeneratedColumn<String> get category =>
+      $composableBuilder(column: $table.category, builder: (column) => column);
+
+  GeneratedColumn<double> get discountPercentage => $composableBuilder(
+    column: $table.discountPercentage,
+    builder: (column) => column,
+  );
+
   GeneratedColumn<double> get price =>
       $composableBuilder(column: $table.price, builder: (column) => column);
 
-  GeneratedColumn<double> get salePrice =>
-      $composableBuilder(column: $table.salePrice, builder: (column) => column);
+  GeneratedColumn<double> get rating =>
+      $composableBuilder(column: $table.rating, builder: (column) => column);
 
   GeneratedColumn<int> get stock =>
       $composableBuilder(column: $table.stock, builder: (column) => column);
@@ -3531,30 +3645,31 @@ class $$ProductsTableAnnotationComposer
   GeneratedColumn<String> get sku =>
       $composableBuilder(column: $table.sku, builder: (column) => column);
 
-  GeneratedColumn<String> get brand =>
-      $composableBuilder(column: $table.brand, builder: (column) => column);
-
-  GeneratedColumn<double> get weight =>
-      $composableBuilder(column: $table.weight, builder: (column) => column);
-
-  GeneratedColumn<String> get dimensions => $composableBuilder(
-    column: $table.dimensions,
+  GeneratedColumn<String> get warrantyInformation => $composableBuilder(
+    column: $table.warrantyInformation,
     builder: (column) => column,
   );
 
-  GeneratedColumn<bool> get isActive =>
-      $composableBuilder(column: $table.isActive, builder: (column) => column);
-
-  GeneratedColumn<bool> get isFeatured => $composableBuilder(
-    column: $table.isFeatured,
+  GeneratedColumn<String> get shippingInformation => $composableBuilder(
+    column: $table.shippingInformation,
     builder: (column) => column,
   );
 
-  GeneratedColumn<DateTime> get createdAt =>
-      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+  GeneratedColumn<String> get availabilityStatus => $composableBuilder(
+    column: $table.availabilityStatus,
+    builder: (column) => column,
+  );
 
-  GeneratedColumn<DateTime> get updatedAt =>
-      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+  GeneratedColumn<String> get returnPolicy => $composableBuilder(
+    column: $table.returnPolicy,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get images =>
+      $composableBuilder(column: $table.images, builder: (column) => column);
+
+  GeneratedColumn<String> get thumbnail =>
+      $composableBuilder(column: $table.thumbnail, builder: (column) => column);
 
   $$CategoriesTableAnnotationComposer get categoryId {
     final $$CategoriesTableAnnotationComposer composer = $composerBuilder(
@@ -3634,70 +3749,74 @@ class $$ProductsTableTableManager
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                Value<String> name = const Value.absent(),
+                Value<String> title = const Value.absent(),
                 Value<String> description = const Value.absent(),
+                Value<String?> category = const Value.absent(),
+                Value<double?> discountPercentage = const Value.absent(),
                 Value<double> price = const Value.absent(),
-                Value<double?> salePrice = const Value.absent(),
+                Value<double?> rating = const Value.absent(),
                 Value<int> stock = const Value.absent(),
                 Value<String> sku = const Value.absent(),
                 Value<int> categoryId = const Value.absent(),
-                Value<String?> brand = const Value.absent(),
-                Value<double?> weight = const Value.absent(),
-                Value<String?> dimensions = const Value.absent(),
-                Value<bool> isActive = const Value.absent(),
-                Value<bool> isFeatured = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
+                Value<String?> warrantyInformation = const Value.absent(),
+                Value<String?> shippingInformation = const Value.absent(),
+                Value<String?> availabilityStatus = const Value.absent(),
+                Value<String?> returnPolicy = const Value.absent(),
+                Value<String?> images = const Value.absent(),
+                Value<String?> thumbnail = const Value.absent(),
               }) => ProductsCompanion(
                 id: id,
-                name: name,
+                title: title,
                 description: description,
+                category: category,
+                discountPercentage: discountPercentage,
                 price: price,
-                salePrice: salePrice,
+                rating: rating,
                 stock: stock,
                 sku: sku,
                 categoryId: categoryId,
-                brand: brand,
-                weight: weight,
-                dimensions: dimensions,
-                isActive: isActive,
-                isFeatured: isFeatured,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
+                warrantyInformation: warrantyInformation,
+                shippingInformation: shippingInformation,
+                availabilityStatus: availabilityStatus,
+                returnPolicy: returnPolicy,
+                images: images,
+                thumbnail: thumbnail,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                required String name,
+                required String title,
                 required String description,
+                Value<String?> category = const Value.absent(),
+                Value<double?> discountPercentage = const Value.absent(),
                 required double price,
-                Value<double?> salePrice = const Value.absent(),
+                Value<double?> rating = const Value.absent(),
                 Value<int> stock = const Value.absent(),
                 required String sku,
                 required int categoryId,
-                Value<String?> brand = const Value.absent(),
-                Value<double?> weight = const Value.absent(),
-                Value<String?> dimensions = const Value.absent(),
-                Value<bool> isActive = const Value.absent(),
-                Value<bool> isFeatured = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
+                Value<String?> warrantyInformation = const Value.absent(),
+                Value<String?> shippingInformation = const Value.absent(),
+                Value<String?> availabilityStatus = const Value.absent(),
+                Value<String?> returnPolicy = const Value.absent(),
+                Value<String?> images = const Value.absent(),
+                Value<String?> thumbnail = const Value.absent(),
               }) => ProductsCompanion.insert(
                 id: id,
-                name: name,
+                title: title,
                 description: description,
+                category: category,
+                discountPercentage: discountPercentage,
                 price: price,
-                salePrice: salePrice,
+                rating: rating,
                 stock: stock,
                 sku: sku,
                 categoryId: categoryId,
-                brand: brand,
-                weight: weight,
-                dimensions: dimensions,
-                isActive: isActive,
-                isFeatured: isFeatured,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
+                warrantyInformation: warrantyInformation,
+                shippingInformation: shippingInformation,
+                availabilityStatus: availabilityStatus,
+                returnPolicy: returnPolicy,
+                images: images,
+                thumbnail: thumbnail,
               ),
           withReferenceMapper: (p0) => p0
               .map(

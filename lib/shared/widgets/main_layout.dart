@@ -19,10 +19,6 @@ class MainLayout extends StatelessWidget {
             label: 'Inicio',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_bag),
-            label: 'Productos',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.shopping_cart),
             label: 'Carrito',
           ),
@@ -37,12 +33,9 @@ class MainLayout extends StatelessWidget {
               context.go(AppRoutes.home);
               break;
             case 1:
-              context.go(AppRoutes.products);
-              break;
-            case 2:
               context.go(AppRoutes.cart);
               break;
-            case 3:
+            case 2:
               context.go(AppRoutes.profile);
               break;
           }

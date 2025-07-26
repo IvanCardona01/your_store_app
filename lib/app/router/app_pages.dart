@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:your_store_app/core/di/injection.dart';
 import 'package:your_store_app/features/auth/injection.dart';
 import 'package:your_store_app/features/auth/presenter/login_presenter.dart';
 import 'package:your_store_app/features/auth/presenter/register_presenter.dart';
+import 'package:your_store_app/features/home/injection.dart';
+import 'package:your_store_app/features/home/presenter/home_presenter.dart';
+import 'package:your_store_app/features/home/view/home_page.dart';
 import '../../../features/auth/view/login_page.dart';
 import '../../../features/auth/view/register_page.dart';
 // import '../../../features/home/view/home_page.dart';
@@ -54,11 +58,13 @@ class AppPages {
           GoRoute(
             path: AppRoutes.home,
             name: AppRoutes.home,
-            builder: (context, state) => const Scaffold(
-              body: Center(
-                child: Text('Home'),
-              ),
-            ),
+            builder: (context, state) {
+              initHome();
+              return BlocProvider(
+                create: (_) => sl<HomePresenter>(),
+                child: const HomePage(),
+              );
+            }
           ),
 
           // // Productos
@@ -79,11 +85,15 @@ class AppPages {
           // ),
 
           // // Carrito y compras
-          // GoRoute(
-          //   path: AppRoutes.cart,
-          //   name: 'cart',
-          //   builder: (context, state) => const CartPage(),
-          // ),
+          GoRoute(
+            path: AppRoutes.cart,
+            name: AppRoutes.cart,
+            builder: (context, state) => const Scaffold(
+              body: Center(
+                child: Text('Carrito'),
+              ),
+            ),
+          ),
           // GoRoute(
           //   path: AppRoutes.checkout,
           //   name: 'checkout',
@@ -96,23 +106,27 @@ class AppPages {
           // ),
 
           // // Perfil de usuario
-          // GoRoute(
-          //   path: AppRoutes.profile,
-          //   name: 'profile',
-          //   builder: (context, state) => const ProfilePage(),
-          //   routes: [
-          //     GoRoute(
-          //       path: '/edit',
-          //       name: 'editProfile',
-          //       builder: (context, state) => const EditProfilePage(),
-          //     ),
-          //     GoRoute(
-          //       path: '/orders',
-          //       name: 'orderHistory',
-          //       builder: (context, state) => const OrderHistoryPage(),
-          //     ),
-          //   ],
-          // ),
+          GoRoute(
+            path: AppRoutes.profile,
+            name: AppRoutes.profile,
+            builder: (context, state) => const Scaffold(
+              body: Center(
+                child: Text('Perfil'),
+              ),
+            ),
+            routes: [
+              // GoRoute(
+              //   path: '/edit',
+              //   name: 'editProfile',
+              //   builder: (context, state) => const EditProfilePage(),
+              // ),
+              // GoRoute(
+              //   path: '/orders',
+              //   name: 'orderHistory',
+              //   builder: (context, state) => const OrderHistoryPage(),
+              // ),
+            ],
+          ),
       ],
       ),
     ],

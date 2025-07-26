@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:your_store_app/app/router/app_routes.dart';
 
 import '../presenter/login_presenter.dart';
-import '../presenter/login_event.dart';
-import '../presenter/login_state.dart';
+import '../presenter/events/login_event.dart';
+import '../presenter/states/login_state.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

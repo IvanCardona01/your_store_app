@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'login_event.dart';
-import 'login_state.dart';
+import 'events/login_event.dart';
+import 'states/login_state.dart';
 import '../interactor/login_use_case.dart';
 
 class LoginPresenter extends Bloc<LoginEvent, LoginState> {
