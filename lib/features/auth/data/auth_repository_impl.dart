@@ -1,10 +1,10 @@
 import 'package:your_store_app/core/db/drift/app_database.dart';
 import '../models/user_model.dart';
 import '../domain/auth_repository.dart';
-import '../domain/database_service.dart';
+import '../domain/auth_database_service.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  final DataBaseService _db;
+  final AuthDatabaseService _db;
 
   AuthRepositoryImpl(this._db);
 

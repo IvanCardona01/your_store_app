@@ -1,7 +1,7 @@
 class UserModel {
   final int? id;
   final String email;
-  final String password;
+  final String? password;
   final String firstName;
   final String lastName;
   final String? phone;
@@ -12,7 +12,7 @@ class UserModel {
   UserModel({
     this.id,
     required this.email,
-    required this.password,
+    this.password,
     required this.firstName,
     required this.lastName,
     this.phone,

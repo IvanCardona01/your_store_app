@@ -3,8 +3,8 @@ import 'package:your_store_app/features/auth/presenter/register_presenter.dart';
 
 import '../../core/db/drift/app_database.dart';
 import 'data/auth_repository_impl.dart';
-import 'domain/database_service.dart';
-import 'data/database_service_impl.dart';
+import 'domain/auth_database_service.dart';
+import 'data/auth_database_service_impl.dart';
 import 'domain/auth_repository.dart';
 import 'interactor/login_use_case.dart';
 import 'presenter/login_presenter.dart';
@@ -15,10 +15,10 @@ void initAuth() {
   if (sl.isRegistered<LoginPresenter>()) return;
 
   // Services (Drift access)
-  sl.registerLazySingleton<DataBaseService>(() => DataBaseServiceImpl(sl<AppDatabase>()));
+  sl.registerLazySingleton<AuthDatabaseService>(() => AuthDatabaseServiceImpl(sl<AppDatabase>()));
 
   // Repositories
-  sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(sl<DataBaseService>()));
+  sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(sl<AuthDatabaseService>()));
 
   // UseCases
   sl.registerLazySingleton<LoginUseCase>(() => LoginUseCase(sl<AuthRepository>()));

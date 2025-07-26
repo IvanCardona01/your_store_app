@@ -8,6 +8,9 @@ import 'package:your_store_app/features/auth/presenter/register_presenter.dart';
 import 'package:your_store_app/features/home/injection.dart';
 import 'package:your_store_app/features/home/presenter/home_presenter.dart';
 import 'package:your_store_app/features/home/view/home_page.dart';
+import 'package:your_store_app/features/profile/injection.dart';
+import 'package:your_store_app/features/profile/presenter/profile_presenter.dart';
+import 'package:your_store_app/features/profile/view/profile_page.dart';
 import '../../../features/auth/view/login_page.dart';
 import '../../../features/auth/view/register_page.dart';
 // import '../../../features/home/view/home_page.dart';
@@ -109,11 +112,13 @@ class AppPages {
           GoRoute(
             path: AppRoutes.profile,
             name: AppRoutes.profile,
-            builder: (context, state) => const Scaffold(
-              body: Center(
-                child: Text('Perfil'),
-              ),
-            ),
+            builder: (context, state) {
+              initProfile();
+              return BlocProvider(
+                create: (_) => sl<ProfilePresenter>(),
+                child: const ProfilePage(),
+              );
+            },
             routes: [
               // GoRoute(
               //   path: '/edit',

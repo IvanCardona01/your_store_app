@@ -9,6 +9,7 @@ import 'tables/users.dart';
 import 'tables/products.dart';
 import 'tables/carts.dart';
 import 'tables/cart_items.dart';
+import 'tables/active_sessions.dart';
 
 part 'app_database.g.dart';
 
@@ -17,6 +18,7 @@ part 'app_database.g.dart';
   Products,
   Carts,
   CartItems,
+  ActiveSessions,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
