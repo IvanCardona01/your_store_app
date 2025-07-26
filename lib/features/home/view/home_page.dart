@@ -155,7 +155,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2),
                 child: Text(
                   product.title,
                   style: const TextStyle(
@@ -167,7 +167,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                padding: const EdgeInsets.only(left: 8.0, bottom: 10),
                 child: Text(
                   "\$${product.price}",
                   style: const TextStyle(color: Colors.green),

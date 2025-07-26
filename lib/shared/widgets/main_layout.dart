@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../app/router/app_routes.dart';
 
 class MainLayout extends StatelessWidget {
-  final Widget child;
+  final StatefulNavigationShell navigationShell;
 
-  const MainLayout({super.key, required this.child});
+  const MainLayout({super.key, required this.navigationShell});
+
+  void _onTap(int index) {
+    navigationShell.goBranch(
+      index,
+      initialLocation: index == navigationShell.currentIndex,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: child,
+      body: navigationShell,
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: navigationShell.currentIndex,
         type: BottomNavigationBarType.fixed,
+        onTap: _onTap,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -27,19 +35,6 @@ class MainLayout extends StatelessWidget {
             label: 'Perfil',
           ),
         ],
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              context.go(AppRoutes.home);
-              break;
-            case 1:
-              context.go(AppRoutes.cart);
-              break;
-            case 2:
-              context.go(AppRoutes.profile);
-              break;
-          }
-        },
       ),
     );
   }

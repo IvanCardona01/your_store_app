@@ -17,7 +17,7 @@ class AuthDatabaseServiceImpl implements AuthDatabaseService {
     if (user == null) {
       return null;
     }
-
+    await _db.delete(_db.activeSessions).go();
     _db.into(_db.activeSessions).insert(
       ActiveSessionsCompanion.insert(
         userId: user.id,
@@ -50,6 +50,7 @@ class AuthDatabaseServiceImpl implements AuthDatabaseService {
         );
 
     final createdUser = await (_db.select(_db.users)..where((t) => t.id.equals(id))).getSingle();
+    await _db.delete(_db.activeSessions).go();
     _db.into(_db.activeSessions).insert(
       ActiveSessionsCompanion.insert(
         userId: createdUser.id,
