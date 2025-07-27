@@ -74,18 +74,23 @@ class CartDatabaseServiceImpl implements CartDatabaseService {
       return;
     }
 
-    final userCart =
-        await (_db.select(_db.carts)
-              ..where((tbl) => tbl.userId.equals(activeSession.userId)))
-            .getSingleOrNull();
 
-    if (userCart == null) {
-      yield 0;
-      return;
+    final existingCart = await (_db.select(_db.carts)
+          ..where((tbl) => tbl.userId.equals(activeSession.userId)))
+        .getSingleOrNull();
+
+    int cartId;
+    if (existingCart == null) {
+      cartId = await _db.into(_db.carts).insert(
+            CartsCompanion.insert(userId: activeSession.userId),
+          );
+    } else {
+      cartId = existingCart.id;
     }
 
+
     yield* (_db.select(_db.cartItems)
-          ..where((tbl) => tbl.cartId.equals(userCart.id)))
+          ..where((tbl) => tbl.cartId.equals(cartId)))
         .watch()
         .map((items) => items.fold<int>(0, (sum, item) => sum + item.quantity));
   }

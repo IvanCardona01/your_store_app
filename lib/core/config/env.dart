@@ -1,7 +1,7 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class Env {
-  static const String dbName = 'your_store_app.db';
-  static const int dbVersion = 1;
-  
-  static const String baseUrl = 'https://dummyjson.com';
-  
+  static String get dbName => dotenv.env['DB_NAME'] ?? 'default.db';
+  static int get dbVersion => int.tryParse(dotenv.env['DB_VERSION'] ?? '1') ?? 1;
+  static String get baseUrl => dotenv.env['BASE_URL'] ?? '';
 }
