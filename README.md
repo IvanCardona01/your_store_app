@@ -1,49 +1,72 @@
 # Your Store App
 
-A store application developed in Flutter.
+A store application developed in **Flutter** with clean architecture principles and reactive updates.
 
-## Architecture and Technologies
+---
 
-### 🏗️ VIP Architecture
+## **Architecture and Technologies**
 
-This project implements the **VIP (View-Interactor-Presenter) architecture** that separates logic into three components:
+### 🏗️ VIP + Bloc Architecture
+This project implements the **VIP (View-Interactor-Presenter)** architecture enhanced with **Bloc** for predictable state management:
 
-- **View**: Handles the user interface and visual presentation
-- **Interactor**: Contains business logic and data handling
-- **Presenter**: Acts as intermediary between View and Interactor
+- **View**: Handles UI and user interactions.
+- **Interactor (Use Cases)**: Encapsulates business logic and communicates with repositories.
+- **Presenter (Bloc)**: Acts as the state manager, connecting Views with Interactors.
+- **Bloc**: Provides an event/state pattern with reactive updates for a clean separation of concerns.
+
+---
 
 ### 🗄️ Drift for Database
+We use **Drift** as the ORM for local SQLite database management, providing:
 
-We use **Drift** as ORM for local SQLite database management, providing:
+- Type-safe queries and compile-time validation.
+- Reactive streams that update the UI automatically when the database changes (e.g., cart badge).
 
-- Type-safe queries
-- Automatic migrations  
-- Reactive streams for real-time updates
+---
+
+### 🔐 Environment Variables (.env)
+We use **flutter_dotenv** to securely manage environment variables:
+
+- Store sensitive information (API keys, base URLs) in a `.env` file.
+- Access them through a dedicated `Env` class.
+
+---
 
 ### 🎯 Bloc for State Management
+- Event-driven updates ensure a predictable data flow.
+- Each feature has its own Presenter (Bloc) for scalability and testability.
+- Integration with Drift streams for real-time updates (e.g., cart count badge).
 
-We implement the **Bloc** pattern for application state management, offering:
+---
 
-- Clear separation between events and states
-- Predictable state management
-- Seamless integration with VIP architecture
+### 🧭 GoRouter for Navigation
+- Declarative and type-safe routing using **GoRouter**.
+- Nested routes with **StatefulShellRoute** to handle tab-based navigation.
+- Easy integration with state restoration.
 
-### 🧭 GoRouter for Routing
+---
 
-We use **GoRouter** for declarative navigation handling:
+### 🛒 Reactive Cart Badge
+- The **cart item count** in the navigation bar updates in **real-time**.
+- Powered by Drift's `watch()` streams and a **CartBadgeCubit** that listens to changes.
 
-- Declarative and typed routes
-- Hierarchical navigation and nested routes
+---
 
+## **Points for Improvement**
 
+### **Security and Data**
+- Add **Auth Guard** for protected routes.
+- Encrypt and hash passwords before storing them locally.
+- Improve **session persistence** (auto-login after app restart).
 
-Points for Improvement
+### **Architecture Enhancements**
+- Implement **DAOs** to fully separate queries from repository logic.
+- Use **type aliases** with shorter paths for imports.
+- Add **Repository interfaces** to enforce contracts between layers.
 
-Auth Guard
-Manage type aliases using short paths
-Encrypt passwords by saving them in the database
-Session persistence
-Complete interceptors
-Network logs
-Multi language support
-DAOs implementation
+### **Networking**
+- Complete **Dio interceptors** for token refresh and error handling.
+- Implement **network logging** for debugging requests/responses.
+
+### **Internationalization**
+- Extend **multi-language support** (currently Spanish/English) using i18next or Flutter’s localization system.
