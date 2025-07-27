@@ -43,5 +43,6 @@ Auth Guard
 Manage type aliases using short paths
 Encrypt passwords by saving them in the database
 Session persistence
-Complete interceptor
+Complete interceptors
 Network logs
+Multi language support

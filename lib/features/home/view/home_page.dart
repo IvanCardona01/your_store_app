@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:your_store_app/features/home/models/add_to_cart_result.dart';
 import 'package:your_store_app/features/home/presenter/home_presenter.dart';
 import 'package:your_store_app/features/home/presenter/states/home_state.dart';
 import 'package:your_store_app/features/home/presenter/events/home_event.dart';
@@ -155,7 +156,10 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8.0,
+                  vertical: 2,
+                ),
                 child: Text(
                   product.title,
                   style: const TextStyle(
@@ -182,16 +186,23 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: Colors.black54,
               child: IconButton(
                 icon: const Icon(Icons.shopping_cart, color: Colors.white),
-                onPressed: () {
-                  showModalBottomSheet(
+                onPressed: () async {
+                  final result = await showModalBottomSheet<AddToCartResult>(
                     context: context,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(20),
-                      ),
-                    ),
                     builder: (_) => AddToCartBottomSheet(product: product),
                   );
+
+                  if (!mounted) return;
+
+                  if (result != null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          '${result.product.title} x${result.quantity} agregado',
+                        ),
+                      ),
+                    );
+                  }
                 },
               ),
             ),
