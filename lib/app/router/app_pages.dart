@@ -5,6 +5,7 @@ import 'package:your_store_app/features/auth/injection.dart';
 import 'package:your_store_app/features/auth/presenter/login_presenter.dart';
 import 'package:your_store_app/features/auth/presenter/register_presenter.dart';
 import 'package:your_store_app/features/cart/injection.dart';
+import 'package:your_store_app/features/cart/presenter/cart_badge_cubit.dart';
 import 'package:your_store_app/features/cart/presenter/cart_presenter.dart';
 import 'package:your_store_app/features/cart/view/cart_page.dart';
 import 'package:your_store_app/features/home/injection.dart';
@@ -50,7 +51,11 @@ class AppPages {
 
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
-          return MainLayout(navigationShell: navigationShell);
+          initCart();
+          return BlocProvider(
+            create: (_) => sl<CartBadgeCubit>(),
+            child: MainLayout(navigationShell: navigationShell),
+          );
         },
         branches: [
           StatefulShellBranch(
@@ -75,7 +80,6 @@ class AppPages {
                 path: AppRoutes.cart,
                 name: AppRoutes.cart,
                 builder: (context, state) {
-                  initCart();
                   return BlocProvider(
                     create: (_) => sl<CartPresenter>(),
                     child: const CartPage(),

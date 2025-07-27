@@ -65,6 +65,32 @@ class CartDatabaseServiceImpl implements CartDatabaseService {
   }
 
   @override
+  Stream<int> watchCartCount() async* {
+    final activeSession = await _db
+        .select(_db.activeSessions)
+        .getSingleOrNull();
+    if (activeSession == null) {
+      yield 0;
+      return;
+    }
+
+    final userCart =
+        await (_db.select(_db.carts)
+              ..where((tbl) => tbl.userId.equals(activeSession.userId)))
+            .getSingleOrNull();
+
+    if (userCart == null) {
+      yield 0;
+      return;
+    }
+
+    yield* (_db.select(_db.cartItems)
+          ..where((tbl) => tbl.cartId.equals(userCart.id)))
+        .watch()
+        .map((items) => items.fold<int>(0, (sum, item) => sum + item.quantity));
+  }
+
+  @override
   Future<Result<void>> removeProductFromCart(int productId) async {
     try {
       final activeSession = await _db

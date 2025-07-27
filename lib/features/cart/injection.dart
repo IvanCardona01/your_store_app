@@ -6,16 +6,22 @@ import 'package:your_store_app/features/cart/domain/cart_database_service.dart';
 import 'package:your_store_app/features/cart/domain/cart_repository.dart';
 import 'package:your_store_app/features/cart/interactor/get_cart_products_stream_use_case.dart';
 import 'package:your_store_app/features/cart/interactor/remove_product_from_cart_use_case.dart';
+import 'package:your_store_app/features/cart/interactor/watch_cart_count_use_case.dart';
+import 'package:your_store_app/features/cart/presenter/cart_badge_cubit.dart';
 import 'package:your_store_app/features/cart/presenter/cart_presenter.dart';
 
 void initCart() {
   if (sl.isRegistered<CartPresenter>()) return;
+  if (sl.isRegistered<CartBadgeCubit>()) return;
+  
 
   sl.registerLazySingleton<CartDatabaseService>(() => CartDatabaseServiceImpl(sl<AppDatabase>()));
   sl.registerLazySingleton<CartRepository>(() => CartRepositoryImpl(sl<CartDatabaseService>()));
   
   sl.registerLazySingleton<GetCartProductsStreamUseCase>(() => GetCartProductsStreamUseCase(sl<CartRepository>()));
   sl.registerLazySingleton<RemoveProductFromCartUseCase>(() => RemoveProductFromCartUseCase(sl<CartRepository>()));
+  sl.registerLazySingleton<WatchCartCountUseCase>(() => WatchCartCountUseCase(sl<CartRepository>()));
 
   sl.registerFactory<CartPresenter>(() => CartPresenter(sl<GetCartProductsStreamUseCase>(), sl<RemoveProductFromCartUseCase>()));
+  sl.registerFactory<CartBadgeCubit>(() => CartBadgeCubit(sl<WatchCartCountUseCase>()));
 }

@@ -22,7 +22,10 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Mi Carrito')),
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text('Mi Carrito'),
+      ),
       body: BlocBuilder<CartPresenter, CartState>(
         builder: (context, state) {
           if (state is CartLoading || state is CartInitial) {

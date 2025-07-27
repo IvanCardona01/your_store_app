@@ -64,6 +64,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text('Mi perfil'),
         actions: [
           IconButton(

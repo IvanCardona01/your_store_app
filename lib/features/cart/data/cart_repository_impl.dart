@@ -14,7 +14,14 @@ class CartRepositoryImpl implements CartRepository {
   }
 
   @override
+  Stream<int> watchCartCount() {
+    return _cartDatabaseService.watchCartCount();
+  }
+
+  @override
   Future<Result> removeProductFromCart(CartProduct cartProduct) async {
-    return await _cartDatabaseService.removeProductFromCart(cartProduct.product.id);
+    return await _cartDatabaseService.removeProductFromCart(
+      cartProduct.product.id,
+    );
   }
 }
