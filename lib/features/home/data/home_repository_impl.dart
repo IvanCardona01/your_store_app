@@ -1,12 +1,16 @@
 import 'package:your_store_app/core/network/domain/network_service.dart';
 import 'package:your_store_app/core/network/endpoints.dart';
+import 'package:your_store_app/core/network/models/result.dart';
+import 'package:your_store_app/features/home/domain/home_database_service.dart';
 import 'package:your_store_app/features/home/domain/home_repository.dart';
 import 'package:your_store_app/features/home/models/category_model.dart';
+import 'package:your_store_app/features/home/models/product_model.dart';
 import 'package:your_store_app/features/home/models/product_response.dart';
 
 class HomeRepositoryImpl implements HomeRepository {
   final NetworkService _networkService;
-  HomeRepositoryImpl(this._networkService);
+  final HomeDatabaseService _homeDatabaseService;
+  HomeRepositoryImpl(this._networkService, this._homeDatabaseService);
 
   @override
   Future<ProductResponse> getProducts({
@@ -39,5 +43,10 @@ class HomeRepositoryImpl implements HomeRepository {
       },
       failure: (message) => <CategoryModel>[],
     );
+  }
+
+  @override
+  Future<Result> addProductToCart(ProductModel product, int quantity) async {
+    return await _homeDatabaseService.addProductToCart(product, quantity);
   }
 }

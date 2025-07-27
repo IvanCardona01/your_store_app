@@ -10,7 +10,7 @@ class Products extends Table {
   RealColumn get price => real()();
   RealColumn get rating => real().nullable()();
   IntColumn get stock => integer().withDefault(const Constant(0))();
-  TextColumn get sku => text().unique()();
+  TextColumn get sku => text().nullable()();
   TextColumn get warrantyInformation => text().nullable()();
   TextColumn get shippingInformation => text().nullable()();
   TextColumn get availabilityStatus => text().nullable()();

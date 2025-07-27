@@ -642,10 +642,9 @@ class $ProductsTable extends Products with TableInfo<$ProductsTable, Product> {
   late final GeneratedColumn<String> sku = GeneratedColumn<String>(
     'sku',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
+    requiredDuringInsert: false,
   );
   static const VerificationMeta _warrantyInformationMeta =
       const VerificationMeta('warrantyInformation');
@@ -803,8 +802,6 @@ class $ProductsTable extends Products with TableInfo<$ProductsTable, Product> {
         _skuMeta,
         sku.isAcceptableOrUnknown(data['sku']!, _skuMeta),
       );
-    } else if (isInserting) {
-      context.missing(_skuMeta);
     }
     if (data.containsKey('warranty_information')) {
       context.handle(
@@ -898,7 +895,7 @@ class $ProductsTable extends Products with TableInfo<$ProductsTable, Product> {
       sku: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}sku'],
-      )!,
+      ),
       warrantyInformation: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}warranty_information'],
@@ -941,7 +938,7 @@ class Product extends DataClass implements Insertable<Product> {
   final double price;
   final double? rating;
   final int stock;
-  final String sku;
+  final String? sku;
   final String? warrantyInformation;
   final String? shippingInformation;
   final String? availabilityStatus;
@@ -957,7 +954,7 @@ class Product extends DataClass implements Insertable<Product> {
     required this.price,
     this.rating,
     required this.stock,
-    required this.sku,
+    this.sku,
     this.warrantyInformation,
     this.shippingInformation,
     this.availabilityStatus,
@@ -982,7 +979,9 @@ class Product extends DataClass implements Insertable<Product> {
       map['rating'] = Variable<double>(rating);
     }
     map['stock'] = Variable<int>(stock);
-    map['sku'] = Variable<String>(sku);
+    if (!nullToAbsent || sku != null) {
+      map['sku'] = Variable<String>(sku);
+    }
     if (!nullToAbsent || warrantyInformation != null) {
       map['warranty_information'] = Variable<String>(warrantyInformation);
     }
@@ -1020,7 +1019,7 @@ class Product extends DataClass implements Insertable<Product> {
           ? const Value.absent()
           : Value(rating),
       stock: Value(stock),
-      sku: Value(sku),
+      sku: sku == null && nullToAbsent ? const Value.absent() : Value(sku),
       warrantyInformation: warrantyInformation == null && nullToAbsent
           ? const Value.absent()
           : Value(warrantyInformation),
@@ -1058,7 +1057,7 @@ class Product extends DataClass implements Insertable<Product> {
       price: serializer.fromJson<double>(json['price']),
       rating: serializer.fromJson<double?>(json['rating']),
       stock: serializer.fromJson<int>(json['stock']),
-      sku: serializer.fromJson<String>(json['sku']),
+      sku: serializer.fromJson<String?>(json['sku']),
       warrantyInformation: serializer.fromJson<String?>(
         json['warrantyInformation'],
       ),
@@ -1085,7 +1084,7 @@ class Product extends DataClass implements Insertable<Product> {
       'price': serializer.toJson<double>(price),
       'rating': serializer.toJson<double?>(rating),
       'stock': serializer.toJson<int>(stock),
-      'sku': serializer.toJson<String>(sku),
+      'sku': serializer.toJson<String?>(sku),
       'warrantyInformation': serializer.toJson<String?>(warrantyInformation),
       'shippingInformation': serializer.toJson<String?>(shippingInformation),
       'availabilityStatus': serializer.toJson<String?>(availabilityStatus),
@@ -1104,7 +1103,7 @@ class Product extends DataClass implements Insertable<Product> {
     double? price,
     Value<double?> rating = const Value.absent(),
     int? stock,
-    String? sku,
+    Value<String?> sku = const Value.absent(),
     Value<String?> warrantyInformation = const Value.absent(),
     Value<String?> shippingInformation = const Value.absent(),
     Value<String?> availabilityStatus = const Value.absent(),
@@ -1122,7 +1121,7 @@ class Product extends DataClass implements Insertable<Product> {
     price: price ?? this.price,
     rating: rating.present ? rating.value : this.rating,
     stock: stock ?? this.stock,
-    sku: sku ?? this.sku,
+    sku: sku.present ? sku.value : this.sku,
     warrantyInformation: warrantyInformation.present
         ? warrantyInformation.value
         : this.warrantyInformation,
@@ -1238,7 +1237,7 @@ class ProductsCompanion extends UpdateCompanion<Product> {
   final Value<double> price;
   final Value<double?> rating;
   final Value<int> stock;
-  final Value<String> sku;
+  final Value<String?> sku;
   final Value<String?> warrantyInformation;
   final Value<String?> shippingInformation;
   final Value<String?> availabilityStatus;
@@ -1271,7 +1270,7 @@ class ProductsCompanion extends UpdateCompanion<Product> {
     required double price,
     this.rating = const Value.absent(),
     this.stock = const Value.absent(),
-    required String sku,
+    this.sku = const Value.absent(),
     this.warrantyInformation = const Value.absent(),
     this.shippingInformation = const Value.absent(),
     this.availabilityStatus = const Value.absent(),
@@ -1280,8 +1279,7 @@ class ProductsCompanion extends UpdateCompanion<Product> {
     this.thumbnail = const Value.absent(),
   }) : title = Value(title),
        description = Value(description),
-       price = Value(price),
-       sku = Value(sku);
+       price = Value(price);
   static Insertable<Product> custom({
     Expression<int>? id,
     Expression<String>? title,
@@ -1329,7 +1327,7 @@ class ProductsCompanion extends UpdateCompanion<Product> {
     Value<double>? price,
     Value<double?>? rating,
     Value<int>? stock,
-    Value<String>? sku,
+    Value<String?>? sku,
     Value<String?>? warrantyInformation,
     Value<String?>? shippingInformation,
     Value<String?>? availabilityStatus,
@@ -2815,7 +2813,7 @@ typedef $$ProductsTableCreateCompanionBuilder =
       required double price,
       Value<double?> rating,
       Value<int> stock,
-      required String sku,
+      Value<String?> sku,
       Value<String?> warrantyInformation,
       Value<String?> shippingInformation,
       Value<String?> availabilityStatus,
@@ -2833,7 +2831,7 @@ typedef $$ProductsTableUpdateCompanionBuilder =
       Value<double> price,
       Value<double?> rating,
       Value<int> stock,
-      Value<String> sku,
+      Value<String?> sku,
       Value<String?> warrantyInformation,
       Value<String?> shippingInformation,
       Value<String?> availabilityStatus,
@@ -3188,7 +3186,7 @@ class $$ProductsTableTableManager
                 Value<double> price = const Value.absent(),
                 Value<double?> rating = const Value.absent(),
                 Value<int> stock = const Value.absent(),
-                Value<String> sku = const Value.absent(),
+                Value<String?> sku = const Value.absent(),
                 Value<String?> warrantyInformation = const Value.absent(),
                 Value<String?> shippingInformation = const Value.absent(),
                 Value<String?> availabilityStatus = const Value.absent(),
@@ -3222,7 +3220,7 @@ class $$ProductsTableTableManager
                 required double price,
                 Value<double?> rating = const Value.absent(),
                 Value<int> stock = const Value.absent(),
-                required String sku,
+                Value<String?> sku = const Value.absent(),
                 Value<String?> warrantyInformation = const Value.absent(),
                 Value<String?> shippingInformation = const Value.absent(),
                 Value<String?> availabilityStatus = const Value.absent(),

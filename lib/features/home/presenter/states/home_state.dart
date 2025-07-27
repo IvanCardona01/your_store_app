@@ -37,6 +37,12 @@ class HomeLoaded extends HomeState {
   }
 }
 
+class HomeProductAdded extends HomeState {
+  final ProductModel product;
+  final int quantity;
+  const HomeProductAdded(this.product, this.quantity);
+}
+
 class HomeError extends HomeState {
   final String message;
   const HomeError(this.message);

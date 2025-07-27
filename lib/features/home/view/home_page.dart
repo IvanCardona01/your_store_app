@@ -77,7 +77,29 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: BlocBuilder<HomePresenter, HomeState>(
+      body: BlocConsumer<HomePresenter, HomeState>(
+        listener: (context, state) {
+          if (state is HomeProductAdded) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  '${state.product.title} x${state.quantity} agregado',
+                ),
+              ),
+            );
+          }
+          if (state is HomeError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Theme.of(context).colorScheme.error,
+                content: Text(
+                  state.message,
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ),
+            );
+          }
+        },
         builder: (context, state) {
           if (state is HomeLoading) {
             return const ShimmerGrid();
@@ -195,12 +217,8 @@ class _HomePageState extends State<HomePage> {
                   if (!mounted) return;
 
                   if (result != null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          '${result.product.title} x${result.quantity} agregado',
-                        ),
-                      ),
+                    context.read<HomePresenter>().add(
+                      AddProductToCart(product, result.quantity),
                     );
                   }
                 },

@@ -46,3 +46,4 @@ Session persistence
 Complete interceptors
 Network logs
 Multi language support
+DAOs implementation
