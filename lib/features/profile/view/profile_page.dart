@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:your_store_app/core/db/drift/app_database.dart';
 import 'package:your_store_app/features/auth/models/user_model.dart';
 import 'package:your_store_app/features/profile/presenter/events/profile_event.dart';
 import 'package:your_store_app/features/profile/presenter/profile_presenter.dart';
 import 'package:your_store_app/features/profile/presenter/states/profile_state.dart';
+import 'package:your_store_app/app/router/app_routes.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -52,14 +54,30 @@ class _ProfilePageState extends State<ProfilePage> {
     countryCtrl.text = user.country ?? '';
   }
 
+  void _logout() {
+    context.read<ProfilePresenter>().add(const ProfileUserDidLogout());
+  }
+
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Mi perfil')),
+      appBar: AppBar(
+        title: const Text('Mi perfil'),
+        actions: [
+          IconButton(
+            tooltip: 'Cerrar sesión',
+            icon: const Icon(Icons.logout),
+            onPressed: _logout,
+          ),
+        ],
+      ),
       body: BlocConsumer<ProfilePresenter, ProfileState>(
         listener: (context, state) {
+          if (state is ProfileLogout) {
+            context.go(AppRoutes.login);
+          }
           if (state is ProfileLoaded) {
             _fillControllers(state.user);
           }
@@ -86,9 +104,11 @@ class _ProfilePageState extends State<ProfilePage> {
           }
 
           if (state is ProfileLoaded || state is ProfileSuccess) {
-          // Para simplificar, usar el último user disponible
-            final user = (state is ProfileLoaded) ? state.user : (state as ProfileSuccess).user;
-            final saving = (state is ProfileLoaded) ? state.saving : false;
+            final user = (state is ProfileLoaded)
+                ? state.user
+                : (state as ProfileSuccess).user;
+            final saving =
+                (state is ProfileLoaded) ? state.saving : false;
 
             return SingleChildScrollView(
               padding: const EdgeInsets.all(16),
@@ -100,59 +120,65 @@ class _ProfilePageState extends State<ProfilePage> {
                     children: [
                       _AvatarHeader(user: user),
                       const SizedBox(height: 24),
-
                       TextFormField(
                         controller: firstNameCtrl,
-                        decoration: const InputDecoration(labelText: 'Nombre'),
-                        validator: (v) => v == null || v.isEmpty ? 'Ingrese su nombre' : null,
+                        decoration:
+                            const InputDecoration(labelText: 'Nombre'),
+                        validator: (v) =>
+                            v == null || v.isEmpty
+                                ? 'Ingrese su nombre'
+                                : null,
                       ),
                       const SizedBox(height: 12),
-
                       TextFormField(
                         controller: lastNameCtrl,
-                        decoration: const InputDecoration(labelText: 'Apellido'),
-                        validator: (v) => v == null || v.isEmpty ? 'Ingrese su apellido' : null,
+                        decoration:
+                            const InputDecoration(labelText: 'Apellido'),
+                        validator: (v) =>
+                            v == null || v.isEmpty
+                                ? 'Ingrese su apellido'
+                                : null,
                       ),
                       const SizedBox(height: 12),
-
                       TextFormField(
                         controller: emailCtrl,
                         keyboardType: TextInputType.emailAddress,
-                        decoration: const InputDecoration(labelText: 'Email'),
+                        decoration:
+                            const InputDecoration(labelText: 'Email'),
                         validator: (v) {
                           if (v == null || v.isEmpty) return 'Ingrese su email';
-                          final regex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
+                          final regex =
+                              RegExp(r'^[^@]+@[^@]+\.[^@]+$');
                           if (!regex.hasMatch(v)) return 'Email inválido';
                           return null;
                         },
                       ),
                       const SizedBox(height: 12),
-
                       TextFormField(
                         controller: phoneCtrl,
                         keyboardType: TextInputType.phone,
-                        decoration: const InputDecoration(labelText: 'Teléfono'),
+                        decoration:
+                            const InputDecoration(labelText: 'Teléfono'),
                       ),
                       const SizedBox(height: 12),
-
                       TextFormField(
                         controller: addressCtrl,
-                        decoration: const InputDecoration(labelText: 'Dirección'),
+                        decoration:
+                            const InputDecoration(labelText: 'Dirección'),
                       ),
                       const SizedBox(height: 12),
-
                       TextFormField(
                         controller: cityCtrl,
-                        decoration: const InputDecoration(labelText: 'Ciudad'),
+                        decoration:
+                            const InputDecoration(labelText: 'Ciudad'),
                       ),
                       const SizedBox(height: 12),
-
                       TextFormField(
                         controller: countryCtrl,
-                        decoration: const InputDecoration(labelText: 'País'),
+                        decoration:
+                            const InputDecoration(labelText: 'País'),
                       ),
                       const SizedBox(height: 24),
-
                       SizedBox(
                         width: double.infinity,
                         height: 48,
@@ -163,20 +189,42 @@ class _ProfilePageState extends State<ProfilePage> {
                                   if (_formKey.currentState!.validate()) {
                                     final model = UserModel(
                                       id: user.id,
-                                      firstName: firstNameCtrl.text.trim(),
-                                      lastName: lastNameCtrl.text.trim(),
+                                      firstName:
+                                          firstNameCtrl.text.trim(),
+                                      lastName:
+                                          lastNameCtrl.text.trim(),
                                       email: emailCtrl.text.trim(),
-                                      phone: phoneCtrl.text.trim().isEmpty ? null : phoneCtrl.text.trim(),
-                                      address: addressCtrl.text.trim().isEmpty ? null : addressCtrl.text.trim(),
-                                      city: cityCtrl.text.trim().isEmpty ? null : cityCtrl.text.trim(),
-                                      country: countryCtrl.text.trim().isEmpty ? null : countryCtrl.text.trim(),
+                                      phone: phoneCtrl.text
+                                              .trim()
+                                              .isEmpty
+                                          ? null
+                                          : phoneCtrl.text.trim(),
+                                      address: addressCtrl.text
+                                              .trim()
+                                              .isEmpty
+                                          ? null
+                                          : addressCtrl.text.trim(),
+                                      city: cityCtrl.text
+                                              .trim()
+                                              .isEmpty
+                                          ? null
+                                          : cityCtrl.text.trim(),
+                                      country: countryCtrl.text
+                                              .trim()
+                                              .isEmpty
+                                          ? null
+                                          : countryCtrl.text.trim(),
                                     );
 
-                                    context.read<ProfilePresenter>().add(ProfileSubmitted(model));
+                                    context
+                                        .read<ProfilePresenter>()
+                                        .add(ProfileSubmitted(model));
                                   }
                                 },
                           child: saving
-                              ? const CircularProgressIndicator(color: Colors.white)
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
                               : const Text('Guardar cambios'),
                         ),
                       ),
@@ -189,7 +237,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
           if (state is ProfileFailure) {
             return Center(
-              child: Text(state.message, style: const TextStyle(color: Colors.red)),
+              child: Text(
+                state.message,
+                style: const TextStyle(color: Colors.red),
+              ),
             );
           }
 
@@ -207,14 +258,15 @@ class _AvatarHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-
     return Column(
       children: [
         CircleAvatar(
           radius: 40,
           backgroundColor: colors.primary.withValues(alpha: 0.1),
           child: Text(
-            user.firstName.isNotEmpty ? user.firstName[0].toUpperCase() : '?',
+            user.firstName.isNotEmpty
+                ? user.firstName[0].toUpperCase()
+                : '?',
             style: TextStyle(
               fontSize: 32,
               color: colors.primary,

@@ -6,4 +6,5 @@ import 'package:your_store_app/features/auth/models/user_model.dart';
 abstract class ProfileDatabaseService {
   Future<Result<User?>> getUser();
   Future<Result<User?>> updateUser(UserModel user);
+  Future<Result> logout();
 }

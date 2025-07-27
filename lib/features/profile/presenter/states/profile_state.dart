@@ -56,3 +56,7 @@ class ProfileFailure extends ProfileState {
   @override
   List<Object?> get props => [message];
 }
+
+class ProfileLogout extends ProfileState {
+  const ProfileLogout();
+}

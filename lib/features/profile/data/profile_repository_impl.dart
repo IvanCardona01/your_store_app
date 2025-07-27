@@ -18,4 +18,9 @@ class ProfileRepositoryImpl implements ProfileRepository {
   Future<Result<User?>> updateUser(UserModel user) async {
     return _db.updateUser(user);
   }
-} 
+
+  @override
+  Future<Result> logout() async {
+    return _db.logout();
+  }
+}

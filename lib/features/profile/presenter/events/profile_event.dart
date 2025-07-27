@@ -23,3 +23,7 @@ class ProfileSubmitted extends ProfileEvent {
   @override
   List<Object?> get props => [user];
 }
+
+class ProfileUserDidLogout extends ProfileEvent {
+  const ProfileUserDidLogout();
+}

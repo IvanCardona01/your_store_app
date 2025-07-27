@@ -5,6 +5,7 @@ import 'package:your_store_app/features/profile/data/profile_repository_impl.dar
 import 'package:your_store_app/features/profile/domain/profile_database_service.dart';
 import 'package:your_store_app/features/profile/domain/profile_repository.dart';
 import 'package:your_store_app/features/profile/interactor/get_profile_use_case.dart';
+import 'package:your_store_app/features/profile/interactor/logout_use_case.dart';
 import 'package:your_store_app/features/profile/interactor/update_user_use_case.dart';
 import 'package:your_store_app/features/profile/presenter/profile_presenter.dart';
 
@@ -15,5 +16,6 @@ void initProfile() {
   sl.registerFactory<ProfileRepository>(() => ProfileRepositoryImpl(sl<ProfileDatabaseService>()));
   sl.registerFactory<GetProfileUseCase>(() => GetProfileUseCase(sl<ProfileRepository>()));
   sl.registerFactory<UpdateUserUseCase>(() => UpdateUserUseCase(sl<ProfileRepository>()));
-  sl.registerFactory<ProfilePresenter>(() => ProfilePresenter(sl<GetProfileUseCase>(), sl<UpdateUserUseCase>()));
+  sl.registerFactory<LogoutUseCase>(() => LogoutUseCase(sl<ProfileRepository>()));
+  sl.registerFactory<ProfilePresenter>(() => ProfilePresenter(sl<GetProfileUseCase>(), sl<UpdateUserUseCase>(), sl<LogoutUseCase>()));
 }

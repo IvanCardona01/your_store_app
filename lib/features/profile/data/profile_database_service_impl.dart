@@ -54,4 +54,10 @@ class ProfileDatabaseServiceImpl implements ProfileDatabaseService {
     }
     return Result.success(userUpdated);
   }
+
+  @override
+  Future<Result> logout() async {
+    await _db.delete(_db.activeSessions).go();
+    return Result.success(null);
+  }
 }
