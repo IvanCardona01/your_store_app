@@ -1,11 +1,12 @@
-// app_pages.dart
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:your_store_app/core/di/injection.dart';
 import 'package:your_store_app/features/auth/injection.dart';
 import 'package:your_store_app/features/auth/presenter/login_presenter.dart';
 import 'package:your_store_app/features/auth/presenter/register_presenter.dart';
+import 'package:your_store_app/features/cart/injection.dart';
+import 'package:your_store_app/features/cart/presenter/cart_presenter.dart';
+import 'package:your_store_app/features/cart/view/cart_page.dart';
 import 'package:your_store_app/features/home/injection.dart';
 import 'package:your_store_app/features/home/presenter/home_presenter.dart';
 import 'package:your_store_app/features/home/view/home_page.dart';
@@ -73,9 +74,13 @@ class AppPages {
               GoRoute(
                 path: AppRoutes.cart,
                 name: AppRoutes.cart,
-                builder: (context, state) => const Scaffold(
-                  body: Center(child: Text('Carrito')),
-                ),
+                builder: (context, state) {
+                  initCart();
+                  return BlocProvider(
+                    create: (_) => sl<CartPresenter>(),
+                    child: const CartPage(),
+                  );
+                },
               ),
             ],
           ),

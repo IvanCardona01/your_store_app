@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:your_store_app/features/home/models/add_to_cart_result.dart';
+import 'package:your_store_app/shared/models/cart_product.dart';
 import 'package:your_store_app/features/home/models/product_model.dart';
 
 class AddToCartBottomSheet extends StatefulWidget {
@@ -23,7 +23,7 @@ class _AddToCartBottomSheetState extends State<AddToCartBottomSheet> {
   @override
   void initState() {
     super.initState();
-    _quantity = widget.initialQuantity.clamp(1, widget.product.stock);
+    _quantity = widget.initialQuantity.clamp(1, widget.product.stock ?? 0);
   }
 
   void _decrement() {
@@ -33,7 +33,7 @@ class _AddToCartBottomSheetState extends State<AddToCartBottomSheet> {
   }
 
   void _increment() {
-    if (_quantity < widget.product.stock) {
+    if (_quantity < (widget.product.stock ?? 0)) {
       setState(() => _quantity++);
     }
   }
@@ -145,7 +145,7 @@ class _AddToCartBottomSheetState extends State<AddToCartBottomSheet> {
                   Expanded(
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        context.pop(AddToCartResult(widget.product, _quantity));
+                        context.pop(CartProduct(widget.product, _quantity, widget.product.price));
                       },
                       icon: const Icon(Icons.shopping_cart),
                       label: const Text('Agregar'),

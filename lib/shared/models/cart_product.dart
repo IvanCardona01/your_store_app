@@ -1,8 +1,9 @@
 import 'package:your_store_app/features/home/models/product_model.dart';
 
-class AddToCartResult {
+class CartProduct {
   final ProductModel product;
   final int quantity;
+  final double unitPrice;
 
-  AddToCartResult(this.product, this.quantity);
+  CartProduct(this.product, this.quantity, this.unitPrice);
 }

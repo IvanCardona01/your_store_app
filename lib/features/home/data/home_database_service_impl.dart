@@ -28,13 +28,13 @@ class HomeDatabaseServiceImpl implements HomeDatabaseService {
             discountPercentage: Value(product.discountPercentage),
             price: product.price,
             rating: Value(product.rating),
-            stock: Value(product.stock),
+            stock: Value(product.stock ?? 0),
             sku: Value(product.sku ?? ''),
             warrantyInformation: Value(product.warrantyInformation),
             shippingInformation: Value(product.shippingInformation),
             availabilityStatus: Value(product.availabilityStatus),
             returnPolicy: Value(product.returnPolicy),
-            images: Value(product.images.join(',')),
+            images: Value(product.images?.join(',')),
             thumbnail: Value(product.thumbnail),
           );
           productId = await _db.into(_db.products).insert(productCompanion);

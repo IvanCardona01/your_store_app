@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:your_store_app/features/home/models/add_to_cart_result.dart';
+import 'package:your_store_app/shared/models/cart_product.dart';
 import 'package:your_store_app/features/home/presenter/home_presenter.dart';
 import 'package:your_store_app/features/home/presenter/states/home_state.dart';
 import 'package:your_store_app/features/home/presenter/events/home_event.dart';
@@ -209,7 +209,7 @@ class _HomePageState extends State<HomePage> {
               child: IconButton(
                 icon: const Icon(Icons.shopping_cart, color: Colors.white),
                 onPressed: () async {
-                  final result = await showModalBottomSheet<AddToCartResult>(
+                  final result = await showModalBottomSheet<CartProduct>(
                     context: context,
                     builder: (_) => AddToCartBottomSheet(product: product),
                   );
