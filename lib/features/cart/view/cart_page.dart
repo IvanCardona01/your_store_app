@@ -31,8 +31,10 @@ class _CartPageState extends State<CartPage> {
 
           if (state is CartFailure) {
             return Center(
-              child: Text(state.message,
-                  style: const TextStyle(color: Colors.red)),
+              child: Text(
+                state.message,
+                style: const TextStyle(color: Colors.red),
+              ),
             );
           }
 
@@ -54,7 +56,9 @@ class _CartPageState extends State<CartPage> {
                   child: Text(
                     "Total a pagar: \$${state.total.toStringAsFixed(2)}",
                     style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 Expanded(
@@ -76,7 +80,6 @@ class _CartPageState extends State<CartPage> {
     );
   }
 }
-
 
 class _CartProductCard extends StatelessWidget {
   final CartProduct cartProduct;
@@ -110,8 +113,10 @@ class _CartProductCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(cartProduct.product.title,
-                      style:
-                          const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      )),
                   Text('Valor unitario: \$${cartProduct.unitPrice.toStringAsFixed(2)}'),
                   Text('Cantidad: ${cartProduct.quantity}'),
                   Text('Total: \$${totalProductPrice.toStringAsFixed(2)}'),

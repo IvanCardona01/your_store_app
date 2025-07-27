@@ -11,32 +11,32 @@ class CartDatabaseServiceImpl implements CartDatabaseService {
   CartDatabaseServiceImpl(this._db);
 
   @override
-  Future<Result<List<CartProduct>>> getCartProducts() async {
-    try {
-      final activeSession = await _db
-          .select(_db.activeSessions)
-          .getSingleOrNull();
-      if (activeSession == null) {
-        return Result.failure('No active session found');
-      }
+  Stream<List<CartProduct>> watchCartProducts() async* {
+    final activeSession = await _db
+        .select(_db.activeSessions)
+        .getSingleOrNull();
+    if (activeSession == null) {
+      yield [];
+      return;
+    }
 
-      final cart =
-          await (_db.select(_db.carts)
-                ..where((tbl) => tbl.userId.equals(activeSession.userId)))
-              .getSingleOrNull();
+    final userCart =
+        await (_db.select(_db.carts)
+              ..where((tbl) => tbl.userId.equals(activeSession.userId)))
+            .getSingleOrNull();
 
-      if (cart == null) {
-        return Result.success([]);
-      }
+    if (userCart == null) {
+      yield [];
+      return;
+    }
 
-      final query = await (_db.select(_db.cartItems).join([
-        innerJoin(
-          _db.products,
-          _db.products.id.equalsExp(_db.cartItems.productId),
-        ),
-      ])..where(_db.cartItems.cartId.equals(cart.id))).get();
-
-      final products = query.map((row) {
+    yield* (_db.select(_db.cartItems).join([
+      innerJoin(
+        _db.products,
+        _db.products.id.equalsExp(_db.cartItems.productId),
+      ),
+    ])..where(_db.cartItems.cartId.equals(userCart.id))).watch().map((rows) {
+      return rows.map((row) {
         final product = row.readTable(_db.products);
         final cartItem = row.readTable(_db.cartItems);
 
@@ -46,8 +46,8 @@ class CartDatabaseServiceImpl implements CartDatabaseService {
             title: product.title,
             description: product.description,
             category: product.category ?? '',
-            discountPercentage: product.discountPercentage ?? 0,
             price: product.price,
+            discountPercentage: product.discountPercentage ?? 0,
             rating: product.rating ?? 0,
             stock: product.stock,
             sku: product.sku ?? '',
@@ -61,11 +61,7 @@ class CartDatabaseServiceImpl implements CartDatabaseService {
           cartItem.unitPrice,
         );
       }).toList();
-
-      return Result.success(products);
-    } catch (e) {
-      return Result.failure('Error fetching cart products: $e');
-    }
+    });
   }
 
   @override
@@ -74,7 +70,6 @@ class CartDatabaseServiceImpl implements CartDatabaseService {
       final activeSession = await _db
           .select(_db.activeSessions)
           .getSingleOrNull();
-
       if (activeSession == null) {
         return Result.failure('No active session found');
       }
@@ -84,21 +79,13 @@ class CartDatabaseServiceImpl implements CartDatabaseService {
                 ..where((tbl) => tbl.userId.equals(activeSession.userId)))
               .getSingleOrNull();
 
-      if (cart == null) {
-        return Result.failure('Cart not found');
-      }
+      if (cart == null) return Result.failure('Cart not found');
 
-      final rowsDeleted =
-          await (_db.delete(_db.cartItems)..where(
-                (tbl) =>
-                    tbl.cartId.equals(cart.id) &
-                    tbl.productId.equals(productId),
-              ))
-              .go();
-
-      if (rowsDeleted == 0) {
-        return Result.failure('Product not found in cart');
-      }
+      await (_db.delete(_db.cartItems)..where(
+            (tbl) =>
+                tbl.cartId.equals(cart.id) & tbl.productId.equals(productId),
+          ))
+          .go();
 
       return Result.success(null);
     } catch (e) {
